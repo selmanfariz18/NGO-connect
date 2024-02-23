@@ -24,30 +24,44 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
-      .slider,
-      .type-slider {
+      .slider {
         text-align: center;
         margin-bottom: 20px;
         position: relative;
+      }
+      .type-slider {
+        text-align: center;
+        margin: 20px 250px;
+        position: relative;
+        background-color: black;
+        border-radius: 20px;
       }
 
       .buttons {
         position: relative;
       }
 
-      .slider-background,
       .type-slider-background {
         position: absolute;
-        background-color: #007bff;
+        background-color: white;
+        height: 100%;
+        width: 35%;
+        left: 0%;
+        transition: left 0.3s;
+        border-radius: 20px;
+      }
+      .slider-background {
+        position: absolute;
+        background-color: yellow;
         height: 100%;
         width: 30%;
-        left: 10%;
+        left: 16%;
         transition: left 0.3s;
         border-radius: 5px;
       }
 
       .slide-btn {
-        padding: 10px 130px;
+        padding: 10px 100px;
         cursor: pointer;
         background: none;
         border: none;
@@ -57,7 +71,7 @@
         z-index: 1;
       }
       .slide-btn1 {
-        padding: 10px 50px;
+        padding: 10px 30px;
         cursor: pointer;
         background: none;
         border: none;
@@ -260,9 +274,9 @@
           `#${type} .slider-background`
         );
         if (formId === "login") {
-          sliderBackground.style.left = "10%";
+          sliderBackground.style.left = "16%";
         } else {
-          sliderBackground.style.left = "50%";
+          sliderBackground.style.left = "52%";
         }
       }
 

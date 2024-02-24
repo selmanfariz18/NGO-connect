@@ -8,9 +8,16 @@
 						initial-scale=1.0"
     />
     <title>Signup/Signin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Shantell+Sans:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: Shantell Sans, sans-serif;
         justify-content: center;
         margin: 20px;
       }
@@ -27,13 +34,18 @@
       .slider {
         text-align: center;
         margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
         position: relative;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 20px;
+        width: 230px;
       }
       .type-slider {
         text-align: center;
         margin: 20px 250px;
         position: relative;
-        background-color: black;
+        background-color: rgba(0, 0, 0, 0.8);
         border-radius: 20px;
       }
 
@@ -52,10 +64,10 @@
       }
       .slider-background {
         position: absolute;
-        background-color: yellow;
+        background-color: white;
         height: 100%;
-        width: 30%;
-        left: 16%;
+        width: 50%;
+        left: 0%;
         transition: left 0.3s;
         border-radius: 5px;
       }
@@ -66,9 +78,13 @@
         background: none;
         border: none;
         color: black;
-        font-size: 16px;
+        font-size: 20px;
+        font-weight: 600;
         position: relative;
         z-index: 1;
+      }
+      .non-selected-btn {
+        color: white;
       }
       .slide-btn1 {
         padding: 10px 30px;
@@ -77,12 +93,16 @@
         border: none;
         color: black;
         font-size: 16px;
+        font-weight: 600;
         position: relative;
         z-index: 1;
       }
       .hed {
         justify-content: center;
         text-align: center;
+      }
+      .container {
+        justify-content: center;
       }
     </style>
   </head>
@@ -269,15 +289,31 @@
         }
         document.getElementById(`${type}-${formId}`).style.display = "block"; // Show the selected form
 
-        // Adjust the slider position based on the formId
+        // Adjust the slider position and button colors based on the formId
         var sliderBackground = document.querySelector(
           `#${type} .slider-background`
         );
-        if (formId === "login") {
-          sliderBackground.style.left = "16%";
-        } else {
-          sliderBackground.style.left = "52%";
-        }
+        var buttons = document.querySelectorAll(
+          `#${type} .slider > .buttons > .slide-btn1`
+        ); // Select all 'Login' and 'Signup' buttons
+
+        // Loop through buttons to update styles
+        buttons.forEach(function (button) {
+          if (button.getAttribute("onclick").includes(formId)) {
+            // Selected button
+            button.classList.remove("non-selected-btn");
+            button.style.color = "black"; // Ensure selected button has black text
+            if (formId === "login") {
+              sliderBackground.style.left = "0%";
+            } else {
+              sliderBackground.style.left = "50%";
+            }
+          } else {
+            // Non-selected buttons
+            button.classList.add("non-selected-btn");
+            button.style.color = "white"; // Ensure non-selected buttons have white text
+          }
+        });
       }
 
       function showType(typeId) {
@@ -290,14 +326,30 @@
         var typeSliderBackground = document.querySelector(
           ".type-slider-background"
         );
-        if (typeId === "NGO") {
-          typeSliderBackground.style.left = "0%";
-        } else if (typeId === "Donor") {
-          typeSliderBackground.style.left = "33.3%";
-        } else {
-          typeSliderBackground.style.left = "66.6%";
-        }
+        var buttons = document.querySelectorAll(".type-slider .slide-btn"); // Select all buttons
+
+        // Iterate over buttons to update their classes based on selection
+        buttons.forEach(function (button) {
+          if (button.textContent.trim() === typeId) {
+            button.classList.remove("non-selected-btn"); // Selected button
+            // Adjust background slider position based on button
+            if (typeId === "NGO") {
+              typeSliderBackground.style.left = "0%";
+            } else if (typeId === "Donor") {
+              typeSliderBackground.style.left = "33.3%";
+            } else {
+              // Receiver
+              typeSliderBackground.style.left = "66.6%";
+            }
+          } else {
+            button.classList.add("non-selected-btn"); // Non-selected buttons
+          }
+        });
+        showForm("login", typeId);
       }
+
+      // Call showType with the default selected type on initial load
+      showType("NGO");
     </script>
   </body>
 </html>

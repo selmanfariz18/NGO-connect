@@ -18,19 +18,25 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
     />
+    {% load static %}
 
     <style>
       body {
         font-family: Open Sans, sans-serif;
         justify-content: center;
         margin: 20px;
+        background-image: url('{% static "signup_bg.jpg" %}');
+        height: 100%;
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-size: cover;
       }
 
       .main-container {
         width: 450px;
         margin: auto;
         padding: 20px;
-        border: 1px solid #ccc;
+        border: none;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
@@ -41,7 +47,7 @@
         margin-left: auto;
         margin-right: auto;
         position: relative;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.5);
         border-radius: 20px;
         width: 230px;
       }
@@ -49,7 +55,7 @@
         text-align: center;
         margin: 20px 250px;
         position: relative;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.5);
         border-radius: 20px;
       }
 
@@ -73,7 +79,7 @@
         width: 50%;
         left: 0%;
         transition: left 0.3s;
-        border-radius: 5px;
+        border-radius: 20px;
       }
 
       .slide-btn {
@@ -118,7 +124,7 @@
         padding: 5px;
         margin-right: 20px;
         color: white;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.5);
         border-radius: 5px;
       }
 
@@ -140,7 +146,7 @@
         height: 40px;
         width: 150px;
         color: white;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.5);
         border-radius: 5px;
       }
       .alert {
@@ -184,36 +190,52 @@
         width: 1em;
         height: 1em;
       }
+      .topnav {
+        overflow: hidden;
+      }
+      .topnav h1 {
+        float: left;
+        padding-left: 20px;
+        color: white;
+      }
+      .btn {
+        color: black;
+        width: 110px;
+        height: 35px;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: 500;
+      }
     </style>
   </head>
 
   <body>
     <!--Alert area-->
-    <div class="form-group row">
-      {% for message in messages %} {% if message.tags == 'success' %}
-      <div class="alert alert-good" role="alert">
-        <i class="bi bi-check-circle good-i"></i>
-        {{message}}
-      </div>
-      {% elif message.tags == 'error' %}
-      <div class="alert alert-good" role="alert">
-        <i class="bi bi-hexagon-fill error-i"></i>
-        {{message}}
-      </div>
-      {% elif message.tags == 'info' %}
-      <div class="alert alert-good" role="alert">
-        <i class="bi bi-exclamation-triangle info-i"></i>
-        {{message}}
-      </div>
-      {% else %}
-      <div class="alert" role="alert">{{message}}</div>
-      {% endif %} {% endfor %}
+
+    <div class="topnav">
+      <h1>NGO-Connect</h1>
     </div>
     <div class="main">
-      <div class="hed">
-        <h1 class="heading">NGO-Connect</h1>
+      <div class="form-group row">
+        {% for message in messages %} {% if message.tags == 'success' %}
+        <div class="alert alert-good" role="alert">
+          <i class="bi bi-check-circle good-i"></i>
+          {{message}}
+        </div>
+        {% elif message.tags == 'error' %}
+        <div class="alert alert-good" role="alert">
+          <i class="bi bi-hexagon-fill error-i"></i>
+          {{message}}
+        </div>
+        {% elif message.tags == 'info' %}
+        <div class="alert alert-good" role="alert">
+          <i class="bi bi-exclamation-triangle info-i"></i>
+          {{message}}
+        </div>
+        {% else %}
+        <div class="alert" role="alert">{{message}}</div>
+        {% endif %} {% endfor %}
       </div>
-
       <div class="type-slider">
         <div class="buttons">
           <div class="type-slider-background"></div>

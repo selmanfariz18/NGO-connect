@@ -24,7 +24,7 @@ def signup(request):
         if password == confirm_password:
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'Email already exists')
-                return redirect('sighup')
+                return redirect('signup')
             else:
                 # create user and profile objects
                 user = User.objects.create_user(
@@ -38,6 +38,6 @@ def signup(request):
 
         else:
             messages.info(request, 'Both passwords are not matching')
-            return redirect('sighup')
+            return redirect('signup')
 
     return render(request, 'signup.html')

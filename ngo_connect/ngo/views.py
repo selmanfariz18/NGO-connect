@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from base.models import ngousers
 
@@ -35,5 +36,6 @@ def ngo_login(request):
             return render(request, 'signup.html')
 
 
+@login_required(login_url="signup")
 def ngo_base(request):
     return render(request, 'ngo_base.html')

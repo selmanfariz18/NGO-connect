@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from base.models import ngousers
 
@@ -34,5 +35,6 @@ def receiver_login(request):
             messages.error(request, "Password/email incorrect")
             return render(request, 'signup.html')
 
+@login_required(login_url="signup")
 def receiver_base(request):
     return render(request, 'receiver_base.html')

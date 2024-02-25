@@ -215,25 +215,35 @@
 
           <!-- login form -->
           <div id="NGO-login" class="form-container">
-            <div class="row">
-              <p class="column-p">Email</p>
-              <input
-                type="email"
-                class="email column-input"
-                placeholder="NGO"
-              />
-            </div>
-            <div class="row">
-              <p class="column-p">Password</p>
-              <input
-                type="password"
-                class="email column-input password"
-                placeholder=""
-              />
-            </div>
-            <div class="clkbtn">
-              <button class="clkbtn-button">Login</button>
-            </div>
+            <form
+              action="{% url 'ngo_base' %}"
+              method="POST"
+              class="form-horizontal"
+            >
+              {% csrf_token%}
+
+              <div class="row">
+                <p class="column-p">Email</p>
+                <input
+                  type="email"
+                  class="email column-input"
+                  placeholder="NGO"
+                  name="email"
+                />
+              </div>
+              <div class="row">
+                <p class="column-p">Password</p>
+                <input
+                  type="password"
+                  class="email column-input password"
+                  placeholder=""
+                  name="password"
+                />
+              </div>
+              <div class="clkbtn">
+                <button class="clkbtn-button">Login</button>
+              </div>
+            </form>
           </div>
 
           <!-- signup form -->

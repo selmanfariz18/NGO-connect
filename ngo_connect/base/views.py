@@ -35,7 +35,6 @@ def signup(request):
                 profile.save()
                 messages.success(request, 'Account created successfully.')
                 return render(request, 'signup.html')
-
         else:
             messages.info(request, 'Both passwords are not matching')
             return redirect('signup')

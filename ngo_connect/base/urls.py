@@ -3,5 +3,5 @@ from base import views
 
 urlpatterns = [
     path('',views.home_base, name="home_base"),
-    path('signup/',views.sighup, name="sighup"),
+    path('signup/', views.signup, name="signup"),
 ]

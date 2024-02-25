@@ -238,49 +238,80 @@
 
           <!-- signup form -->
           <div id="NGO-signup" class="form-container" style="display: none">
-            <div class="row">
-              <p class="column-p">Name</p>
-              <input type="text" class="email column-input" placeholder="" />
-            </div>
-            <div class="row">
-              <p class="column-p">Email</p>
-              <input type="email" class="email column-input" placeholder="" />
-            </div>
-            <div class="row">
-              <p class="column-p">Phone</p>
-              <input type="number" class="email column-input" placeholder="" />
-            </div>
-            <div class="row">
-              <p class="column-p">Address</p>
-              <textarea
-                class="email column-input"
-                placeholder=""
-                style="height: 100px"
-              ></textarea>
-            </div>
-            <div class="row">
-              <p class="column-p">Pincode</p>
-              <input type="number" class="email column-input" placeholder="" />
-            </div>
-            <div class="row">
-              <p class="column-p">Password</p>
-              <input
-                type="password"
-                class="email column-input"
-                placeholder=""
-              />
-            </div>
-            <div class="row">
-              <p class="column-p">confirm passowrd</p>
-              <input
-                type="password"
-                class="email column-input"
-                placeholder=""
-              />
-            </div>
-            <div class="clkbtn">
-              <button class="clkbtn-button">Signup</button>
-            </div>
+            <form
+              action="{% url 'signup' %}"
+              method="POST"
+              class="form-horizontal"
+            >
+              {% csrf_token%}
+              <div class="row">
+                <p class="column-p">Name</p>
+                <input
+                  type="text"
+                  class="email column-input"
+                  placeholder=""
+                  name="first_name"
+                />
+              </div>
+              <div class="row">
+                <p class="column-p">Email</p>
+                <input
+                  type="email"
+                  class="email column-input"
+                  placeholder=""
+                  name="email"
+                />
+              </div>
+              <div class="row">
+                <p class="column-p">Phone</p>
+                <input
+                  type="number"
+                  class="email column-input"
+                  placeholder=""
+                  name="phone_number"
+                />
+              </div>
+              <div class="row">
+                <p class="column-p">Address</p>
+                <textarea
+                  class="email column-input"
+                  placeholder=""
+                  style="height: 100px"
+                  name="address"
+                ></textarea>
+              </div>
+              <div class="row">
+                <p class="column-p">Pincode</p>
+                <input
+                  type="number"
+                  class="email column-input"
+                  placeholder=""
+                  name="pincode"
+                />
+              </div>
+              <div class="row">
+                <p class="column-p">Password</p>
+                <input
+                  type="password"
+                  class="email column-input"
+                  placeholder=""
+                  name="password"
+                />
+              </div>
+              <div class="row">
+                <p class="column-p">confirm passowrd</p>
+                <input
+                  type="password"
+                  class="email column-input"
+                  placeholder=""
+                  name="confirm_password"
+                />
+              </div>
+              <input type="hidden" name="user_type" value="NGO" />
+              <div class="clkbtn">
+                <button class="clkbtn-button">Signup</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

@@ -22,16 +22,16 @@ def receiver_login(request):
                 # As a best practice, specify all necessary fields when creating a new object.
                 status = ngousers(user=request.user)           
             if user.is_superuser:
-                messages.error(request, "Error in login")
+                messages.error(request, "Password/email incorrect")
                 return render(request, 'signup.html')
             else:
                 if status.user_type == "Receiver":
                     return HttpResponseRedirect(reverse("receiver_base"))
                 else:
-                    messages.error(request, "You are not a receiver")
+                    messages.info(request, "You are not a receiver")
                     return render(request, "signup.html")
         else:
-            messages.error(request, "Error in login")
+            messages.error(request, "Password/email incorrect")
             return render(request, 'signup.html')
 
 def receiver_base(request):

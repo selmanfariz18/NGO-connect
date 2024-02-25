@@ -151,8 +151,8 @@
         height: 35px;
         margin-left: auto;
         margin-right: auto;
-        font-size: 22px;
-        font-weight: 400;
+        font-size: 16px;
+        font-weight: 300;
         padding: 10px;
       }
       .alert-good {
@@ -160,6 +160,20 @@
       }
       .good-i {
         color: green;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+      .error-i {
+        color: red;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+      .info-i {
+        color: orangered;
         margin-top: auto;
         margin-bottom: auto;
         font-size: 20px;
@@ -174,13 +188,26 @@
   </head>
 
   <body>
+    <!--Alert area-->
     <div class="form-group row">
-      {% for message in messages %}
+      {% for message in messages %} {% if message.tags == 'success' %}
       <div class="alert alert-good" role="alert">
         <i class="bi bi-check-circle good-i"></i>
         {{message}}
       </div>
-      {% endfor %}
+      {% elif message.tags == 'error' %}
+      <div class="alert alert-good" role="alert">
+        <i class="bi bi-hexagon-fill error-i"></i>
+        {{message}}
+      </div>
+      {% elif message.tags == 'info' %}
+      <div class="alert alert-good" role="alert">
+        <i class="bi bi-exclamation-triangle info-i"></i>
+        {{message}}
+      </div>
+      {% else %}
+      <div class="alert" role="alert">{{message}}</div>
+      {% endif %} {% endfor %}
     </div>
     <div class="main">
       <div class="hed">

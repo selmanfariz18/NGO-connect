@@ -22,16 +22,16 @@ def ngo_login(request):
                 # As a best practice, specify all necessary fields when creating a new object.
                 status = ngousers(user=request.user)           
             if user.is_superuser:
-                messages.error(request, "Error in login")
+                messages.error(request, "Password/email incorrect")
                 return render(request, 'signup.html')
             else:
                 if status.user_type == "NGO":
                     return HttpResponseRedirect(reverse("ngo_base"))
                 else:
-                    messages.error(request, "You are not an NGO")
+                    messages.info(request, "You are not an NGO")
                     return render(request, "signup.html")
         else:
-            messages.error(request, "Error in login")
+            messages.error(request, "Password/email incorrect")
             return render(request, 'signup.html')
 
 

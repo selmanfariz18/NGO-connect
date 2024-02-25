@@ -8,7 +8,7 @@ from base.models import ngousers
 
 # Create your views here.
 
-def ngo_base(request):
+def ngo_login(request):
     if request.method == 'POST':
         email=request.POST['email']
         password=request.POST['password']
@@ -20,10 +20,7 @@ def ngo_base(request):
                 status = ngousers.objects.get(user=request.user)
             except ngousers.DoesNotExist:
                 # As a best practice, specify all necessary fields when creating a new object.
-                status = ngousers(user=request.user)
-            
-                
-
+                status = ngousers(user=request.user)           
             if user.is_superuser:
                 messages.error(request, "Error in login")
                 return render(request, 'signup.html')
@@ -31,10 +28,12 @@ def ngo_base(request):
                 if status.user_type == "NGO":
                     return HttpResponseRedirect(reverse("ngo_base"))
                 else:
-                    messages.error(request, "You are not here")
+                    messages.error(request, "You are not an NGO")
                     return render(request, "signup.html")
         else:
             messages.error(request, "Error in login")
             return render(request, 'signup.html')
 
+
+def ngo_base(request):
     return render(request, 'ngo_base.html')

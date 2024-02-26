@@ -21,15 +21,36 @@
     {% load static %}
 
     <style>
+      html {
+        height: 100%; /* Ensure the html element covers the full viewport height */
+      }
+
       body {
         font-family: Open Sans, sans-serif;
         justify-content: center;
-        margin: 20px;
-        background-image: url('{% static "signup_bg.jpg" %}');
+        margin: 0px;
+        position: relative; /* Ensure the pseudo-element positions relative to the body */
+        min-height: 100%; /* Ensure the body covers at least the full viewport height */
+        z-index: 0;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: 100%;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+          ),
+          url('{% static "signup_bg.jpg" %}');
         background-position: center top;
         background-repeat: no-repeat;
         background-size: cover;
+        opacity: 0.8; /* Adjust the opacity as needed */
+        z-index: -1; /* Ensures the background is behind the content */
       }
 
       .main-container {
@@ -196,7 +217,7 @@
       .topnav h1 {
         float: left;
         padding-left: 20px;
-        color: white;
+        color: black;
       }
       .btn {
         color: black;
@@ -210,12 +231,11 @@
   </head>
 
   <body>
-    <!--Alert area-->
-
     <div class="topnav">
       <h1>NGO-Connect</h1>
     </div>
     <div class="main">
+      <!--Alert area-->
       <div class="form-group row">
         {% for message in messages %} {% if message.tags == 'success' %}
         <div class="alert alert-good" role="alert">
@@ -236,6 +256,8 @@
         <div class="alert" role="alert">{{message}}</div>
         {% endif %} {% endfor %}
       </div>
+      <!--Alert area ends-->
+
       <div class="type-slider">
         <div class="buttons">
           <div class="type-slider-background"></div>

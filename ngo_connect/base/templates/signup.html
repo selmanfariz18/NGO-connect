@@ -332,6 +332,7 @@
                   class="email column-input"
                   placeholder=""
                   name="first_name"
+                  oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
                 />
               </div>
               <div class="row">
@@ -350,6 +351,9 @@
                   class="email column-input"
                   placeholder=""
                   name="phone_number"
+                  oninput="this.value = this.value.slice(0, 10);"
+                  pattern="\d*"
+                  title="Phone number must be up to 10 digits."
                 />
               </div>
               <div class="row">
@@ -368,6 +372,9 @@
                   class="email column-input"
                   placeholder=""
                   name="pincode"
+                  oninput="this.value = this.value.slice(0, 6);"
+                  pattern="\d*"
+                  title="Pincode must be up to 6 digits."
                 />
               </div>
               <div class="row">
@@ -377,6 +384,10 @@
                   class="email column-input"
                   placeholder=""
                   name="password"
+                  minlength="8"
+                  maxlength="16"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
+                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
                 />
               </div>
               <div class="row">
@@ -386,6 +397,10 @@
                   class="email column-input"
                   placeholder=""
                   name="confirm_password"
+                  minlength="8"
+                  maxlength="16"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
+                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
                 />
               </div>
               <input type="hidden" name="user_type" value="NGO" />
@@ -460,6 +475,7 @@
                   class="email column-input"
                   placeholder=""
                   name="first_name"
+                  oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
                 />
               </div>
               <div class="row">
@@ -478,6 +494,9 @@
                   class="email column-input"
                   placeholder=""
                   name="phone_number"
+                  oninput="this.value = this.value.slice(0, 10);"
+                  pattern="\d*"
+                  title="Phone number must be up to 10 digits."
                 />
               </div>
               <div class="row">
@@ -496,6 +515,9 @@
                   class="email column-input"
                   placeholder=""
                   name="pincode"
+                  oninput="this.value = this.value.slice(0, 6);"
+                  pattern="\d*"
+                  title="Pincode must be up to 6 digits."
                 />
               </div>
               <div class="row">
@@ -505,6 +527,10 @@
                   class="email column-input"
                   placeholder=""
                   name="password"
+                  minlength="8"
+                  maxlength="16"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
+                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
                 />
               </div>
               <div class="row">
@@ -514,6 +540,10 @@
                   class="email column-input"
                   placeholder=""
                   name="confirm_password"
+                  minlength="8"
+                  maxlength="16"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
+                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
                 />
               </div>
               <input type="hidden" name="user_type" value="Donor" />
@@ -598,6 +628,7 @@
                   class="email column-input"
                   placeholder=""
                   name="first_name"
+                  oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
                 />
               </div>
               <div class="row">
@@ -616,6 +647,9 @@
                   class="email column-input"
                   placeholder=""
                   name="phone_number"
+                  oninput="this.value = this.value.slice(0, 10);"
+                  pattern="\d*"
+                  title="Phone number must be up to 10 digits."
                 />
               </div>
               <div class="row">
@@ -634,6 +668,9 @@
                   class="email column-input"
                   placeholder=""
                   name="pincode"
+                  oninput="this.value = this.value.slice(0, 6);"
+                  pattern="\d*"
+                  title="Pincode must be up to 6 digits."
                 />
               </div>
               <div class="row">
@@ -643,6 +680,10 @@
                   class="email column-input"
                   placeholder=""
                   name="password"
+                  minlength="8"
+                  maxlength="16"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
+                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
                 />
               </div>
               <div class="row">
@@ -652,6 +693,10 @@
                   class="email column-input"
                   placeholder=""
                   name="confirm_password"
+                  minlength="8"
+                  maxlength="16"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
+                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
                 />
               </div>
               <input type="hidden" name="user_type" value="Receiver" />

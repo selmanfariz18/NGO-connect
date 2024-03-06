@@ -227,6 +227,24 @@
         font-size: 17px;
         font-weight: 500;
       }
+
+      .button-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .selectable-button {
+        padding: 10px; /* Adjust padding for better appearance */
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+      /* Style for the selected button */
+      .selected {
+        background-color: #4caf50; /* Green background for selected button */
+        color: white; /* White text color for better contrast */
+      }
     </style>
   </head>
 
@@ -311,8 +329,37 @@
                   name="password"
                 />
               </div>
+              <div class="button-container">
+                <button
+                  type="button"
+                  class="selectable-button"
+                  data-value="Option1"
+                >
+                  Option 1
+                </button>
+                <button
+                  type="button"
+                  class="selectable-button"
+                  data-value="Option2"
+                >
+                  Option 2
+                </button>
+                <button
+                  type="button"
+                  class="selectable-button"
+                  data-value="Option3"
+                >
+                  Option 3
+                </button>
+              </div>
+              <input
+                type="hidden"
+                name="selectedOption"
+                id="selectedOption"
+                required
+              />
               <div class="clkbtn">
-                <button class="clkbtn-button">Login</button>
+                <button class="clkbtn-button" type="submit">Login</button>
               </div>
             </form>
           </div>
@@ -775,8 +822,20 @@
         showForm("login", typeId);
       }
 
-      // Call showType with the default selected type on initial load
       showType("NGO");
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(".selectable-button");
+        const selectedOptionInput = document.getElementById("selectedOption");
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", function () {
+            buttons.forEach((btn) => btn.classList.remove("selected")); // Deselect all buttons
+            this.classList.add("selected"); // Select clicked button
+            selectedOptionInput.value = this.dataset.value; // Set the value to hidden input
+          });
+        });
+      });
     </script>
   </body>
 </html>

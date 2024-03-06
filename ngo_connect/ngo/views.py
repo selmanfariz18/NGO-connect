@@ -13,6 +13,9 @@ def ngo_login(request):
     if request.method == 'POST':
         email=request.POST['email']
         password=request.POST['password']
+        selected_option = request.POST.get('selectedOption')
+        
+
 
         user = authenticate(request=request, username=email, password=password)
         if user is not None:

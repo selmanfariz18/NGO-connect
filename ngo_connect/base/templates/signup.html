@@ -276,17 +276,6 @@
       </div>
       <!--Alert area ends-->
 
-      <div class="type-slider">
-        <div class="buttons">
-          <div class="type-slider-background"></div>
-          <button class="slide-btn" onclick="showType('NGO')">NGO</button>
-          <button class="slide-btn" onclick="showType('Donor')">Donor</button>
-          <button class="slide-btn" onclick="showType('Receiver')">
-            Receiver
-          </button>
-        </div>
-      </div>
-
       <!--Ngo area-->
       <div id="NGO" class="main-container">
         <div class="container">
@@ -329,28 +318,31 @@
                   name="password"
                 />
               </div>
-              <div class="button-container">
-                <button
-                  type="button"
-                  class="selectable-button"
-                  data-value="Option1"
-                >
-                  Option 1
-                </button>
-                <button
-                  type="button"
-                  class="selectable-button"
-                  data-value="Option2"
-                >
-                  Option 2
-                </button>
-                <button
-                  type="button"
-                  class="selectable-button"
-                  data-value="Option3"
-                >
-                  Option 3
-                </button>
+              <div class="row">
+                <p class="column-p">Type</p>
+                <div class="button-container">
+                  <button
+                    type="button"
+                    class="selectable-button"
+                    data-value="NGO"
+                  >
+                    NGO
+                  </button>
+                  <button
+                    type="button"
+                    class="selectable-button"
+                    data-value="Donor"
+                  >
+                    Donor
+                  </button>
+                  <button
+                    type="button"
+                    class="selectable-button"
+                    data-value="Receiver"
+                  >
+                    Receiver
+                  </button>
+                </div>
               </div>
               <input
                 type="hidden"
@@ -372,6 +364,32 @@
               class="form-horizontal"
             >
               {% csrf_token%}
+              <div class="row">
+                <p class="column-p">Type</p>
+                <div class="button-container">
+                  <button
+                    type="button"
+                    class="selectable-button"
+                    data-value="NGO"
+                  >
+                    NGO
+                  </button>
+                  <button
+                    type="button"
+                    class="selectable-button"
+                    data-value="Donor"
+                  >
+                    Donor
+                  </button>
+                  <button
+                    type="button"
+                    class="selectable-button"
+                    data-value="Receiver"
+                  >
+                    Receiver
+                  </button>
+                </div>
+              </div>
               <div class="row">
                 <p class="column-p">Name</p>
                 <input
@@ -458,302 +476,6 @@
           </div>
         </div>
       </div>
-
-      <!--Donor area-->
-      <div id="Donor" class="main-container" style="display: none">
-        <div class="container">
-          <div class="slider">
-            <div class="buttons">
-              <div class="slider-background"></div>
-              <button class="slide-btn1" onclick="showForm('login', 'Donor')">
-                Login
-              </button>
-              <button class="slide-btn1" onclick="showForm('signup', 'Donor')">
-                Signup
-              </button>
-            </div>
-          </div>
-
-          <!-- login form -->
-          <div id="Donor-login" class="form-container">
-            <form
-              action="{% url 'donor_login' %}"
-              method="POST"
-              class="form-horizontal"
-            >
-              {% csrf_token%}
-
-              <div class="row">
-                <p class="column-p">Email</p>
-                <input
-                  type="email"
-                  class="email column-input"
-                  placeholder="NGO"
-                  name="email"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Password</p>
-                <input
-                  type="password"
-                  class="email column-input password"
-                  placeholder=""
-                  name="password"
-                />
-              </div>
-              <div class="clkbtn">
-                <button class="clkbtn-button">Login</button>
-              </div>
-            </form>
-          </div>
-
-          <!-- signup form -->
-          <div id="Donor-signup" class="form-container" style="display: none">
-            <form
-              action="{% url 'signup' %}"
-              method="POST"
-              class="form-horizontal"
-            >
-              {% csrf_token%}
-              <div class="row">
-                <p class="column-p">Name</p>
-                <input
-                  type="text"
-                  class="email column-input"
-                  placeholder=""
-                  name="first_name"
-                  oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Email</p>
-                <input
-                  type="email"
-                  class="email column-input"
-                  placeholder=""
-                  name="email"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Phone</p>
-                <input
-                  type="number"
-                  class="email column-input"
-                  placeholder=""
-                  name="phone_number"
-                  oninput="this.value = this.value.slice(0, 10);"
-                  pattern="\d*"
-                  title="Phone number must be up to 10 digits."
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Address</p>
-                <textarea
-                  class="email column-input"
-                  placeholder=""
-                  style="height: 100px"
-                  name="address"
-                ></textarea>
-              </div>
-              <div class="row">
-                <p class="column-p">Pincode</p>
-                <input
-                  type="number"
-                  class="email column-input"
-                  placeholder=""
-                  name="pincode"
-                  oninput="this.value = this.value.slice(0, 6);"
-                  pattern="\d*"
-                  title="Pincode must be up to 6 digits."
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Password</p>
-                <input
-                  type="password"
-                  class="email column-input"
-                  placeholder=""
-                  name="password"
-                  minlength="8"
-                  maxlength="16"
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
-                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">confirm passowrd</p>
-                <input
-                  type="password"
-                  class="email column-input"
-                  placeholder=""
-                  name="confirm_password"
-                  minlength="8"
-                  maxlength="16"
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
-                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
-                />
-              </div>
-              <input type="hidden" name="user_type" value="Donor" />
-              <div class="clkbtn">
-                <button class="clkbtn-button">Signup</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!--Receiver area-->
-      <div id="Receiver" class="main-container" style="display: none">
-        <div class="container">
-          <div class="slider">
-            <div class="buttons">
-              <div class="slider-background"></div>
-              <button
-                class="slide-btn1"
-                onclick="showForm('login', 'Receiver')"
-              >
-                Login
-              </button>
-              <button
-                class="slide-btn1"
-                onclick="showForm('signup', 'Receiver')"
-              >
-                Signup
-              </button>
-            </div>
-          </div>
-
-          <!-- login form -->
-          <div id="Receiver-login" class="form-container">
-            <form
-              action="{% url 'receiver_login' %}"
-              method="POST"
-              class="form-horizontal"
-            >
-              {% csrf_token%}
-
-              <div class="row">
-                <p class="column-p">Email</p>
-                <input
-                  type="email"
-                  class="email column-input"
-                  placeholder="NGO"
-                  name="email"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Password</p>
-                <input
-                  type="password"
-                  class="email column-input password"
-                  placeholder=""
-                  name="password"
-                />
-              </div>
-              <div class="clkbtn">
-                <button class="clkbtn-button">Login</button>
-              </div>
-            </form>
-          </div>
-
-          <!-- signup form -->
-          <div
-            id="Receiver-signup"
-            class="form-container"
-            style="display: none"
-          >
-            <form
-              action="{% url 'signup' %}"
-              method="POST"
-              class="form-horizontal"
-            >
-              {% csrf_token%}
-              <div class="row">
-                <p class="column-p">Name</p>
-                <input
-                  type="text"
-                  class="email column-input"
-                  placeholder=""
-                  name="first_name"
-                  oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Email</p>
-                <input
-                  type="email"
-                  class="email column-input"
-                  placeholder=""
-                  name="email"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Phone</p>
-                <input
-                  type="number"
-                  class="email column-input"
-                  placeholder=""
-                  name="phone_number"
-                  oninput="this.value = this.value.slice(0, 10);"
-                  pattern="\d*"
-                  title="Phone number must be up to 10 digits."
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Address</p>
-                <textarea
-                  class="email column-input"
-                  placeholder=""
-                  style="height: 100px"
-                  name="address"
-                ></textarea>
-              </div>
-              <div class="row">
-                <p class="column-p">Pincode</p>
-                <input
-                  type="number"
-                  class="email column-input"
-                  placeholder=""
-                  name="pincode"
-                  oninput="this.value = this.value.slice(0, 6);"
-                  pattern="\d*"
-                  title="Pincode must be up to 6 digits."
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">Password</p>
-                <input
-                  type="password"
-                  class="email column-input"
-                  placeholder=""
-                  name="password"
-                  minlength="8"
-                  maxlength="16"
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
-                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
-                />
-              </div>
-              <div class="row">
-                <p class="column-p">confirm passowrd</p>
-                <input
-                  type="password"
-                  class="email column-input"
-                  placeholder=""
-                  name="confirm_password"
-                  minlength="8"
-                  maxlength="16"
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$]).{8,}"
-                  title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
-                />
-              </div>
-              <input type="hidden" name="user_type" value="Receiver" />
-              <div class="clkbtn">
-                <button class="clkbtn-button">Signup</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
     <script>
       function showForm(formId, type) {
@@ -827,6 +549,7 @@
       document.addEventListener("DOMContentLoaded", function () {
         const buttons = document.querySelectorAll(".selectable-button");
         const selectedOptionInput = document.getElementById("selectedOption");
+        const form = document.querySelector("form"); // Assuming there's only one form
 
         buttons.forEach((button) => {
           button.addEventListener("click", function () {
@@ -834,6 +557,14 @@
             this.classList.add("selected"); // Select clicked button
             selectedOptionInput.value = this.dataset.value; // Set the value to hidden input
           });
+        });
+
+        // Prevent form submission if no option is selected
+        form.addEventListener("submit", function (e) {
+          if (!selectedOptionInput.value) {
+            e.preventDefault(); // Prevent form submission
+            alert("Please select a user type before submitting."); // Inform the user
+          }
         });
       });
     </script>

@@ -20,7 +20,7 @@ def signup(request):
         phone_number = request.POST['phone_number']
         address = request.POST['address']
         pincode = request.POST['pincode']
-        user_type = request.POST['user_type']
+        user_type = request.POST['selectedOption']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
         

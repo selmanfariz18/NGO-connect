@@ -297,6 +297,7 @@
               action="{% url 'signin' %}"
               method="POST"
               class="form-horizontal"
+              id="loginForm"
             >
               {% csrf_token%}
 
@@ -347,7 +348,7 @@
               <input
                 type="hidden"
                 name="selectedOption"
-                id="selectedOption"
+                class="selectedOption"
                 required
               />
               <div class="clkbtn">
@@ -362,6 +363,7 @@
               action="{% url 'signup' %}"
               method="POST"
               class="form-horizontal"
+              id="signupForm"
             >
               {% csrf_token%}
               <div class="row">
@@ -468,7 +470,13 @@
                   title="Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and special characters like @#$"
                 />
               </div>
-              <input type="hidden" name="user_type" value="NGO" />
+              <!--<input type="hidden" name="user_type" value="NGO" />-->
+              <input
+                type="hidden"
+                name="selectedOption"
+                class="selectedOption"
+                required
+              />
               <div class="clkbtn">
                 <button class="clkbtn-button">Signup</button>
               </div>
@@ -548,23 +556,31 @@
 
       document.addEventListener("DOMContentLoaded", function () {
         const buttons = document.querySelectorAll(".selectable-button");
-        const selectedOptionInput = document.getElementById("selectedOption");
-        const form = document.querySelector("form"); // Assuming there's only one form
 
-        buttons.forEach((button) => {
-          button.addEventListener("click", function () {
-            buttons.forEach((btn) => btn.classList.remove("selected")); // Deselect all buttons
-            this.classList.add("selected"); // Select clicked button
-            selectedOptionInput.value = this.dataset.value; // Set the value to hidden input
+        // Select both forms using their unique IDs
+        const forms = document.querySelectorAll("#loginForm, #signupForm");
+
+        forms.forEach((form) => {
+          const selectedOptionInput = form.querySelector(".selectedOption"); // Select the hidden input by class within the form
+
+          buttons.forEach((button) => {
+            button.addEventListener("click", function () {
+              // Reset selection on all buttons
+              form
+                .querySelectorAll(".selectable-button")
+                .forEach((btn) => btn.classList.remove("selected"));
+              this.classList.add("selected"); // Mark the clicked button as selected
+              selectedOptionInput.value = this.dataset.value; // Update the hidden input's value
+            });
           });
-        });
 
-        // Prevent form submission if no option is selected
-        form.addEventListener("submit", function (e) {
-          if (!selectedOptionInput.value) {
-            e.preventDefault(); // Prevent form submission
-            alert("Please select a user type before submitting."); // Inform the user
-          }
+          // Add submit event listener to each form
+          form.addEventListener("submit", function (e) {
+            if (!selectedOptionInput.value) {
+              e.preventDefault(); // Prevent the form from being submitted
+              alert("Please select a user type before submitting."); // Show a message
+            }
+          });
         });
       });
     </script>

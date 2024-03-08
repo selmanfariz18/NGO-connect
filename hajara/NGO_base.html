@@ -1,65 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{name}|NGO</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body style="font-family: sans-serif">
-    <header
-      class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md"
-    >
-      <div class="flex-1 flex justify-between items-center">
-        <a href="#" class="text-xl">NGO-Connect</a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{name}|NGO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body style="font-family: sans-serif">
+  <!--header start-->
+  <header class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md">
+    <div class="flex-1 flex justify-between items-center">
+      <a href="#" class="text-xl">NGO-Connect</a>
+    </div>
+
+    <label for="menu-toggle" class="pointer-cursor md:hidden block">
+      <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+        viewBox="0 0 20 20">
+        <title>menu</title>
+        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+      </svg>
+    </label>
+    <input class="hidden" type="checkbox" id="menu-toggle" />
+
+    <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
+      <nav>
+        <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
+          <li class="hover:bg-violet-600">
+            <a class="md:p-4 py-3 px-0 block" href="#">Contributers</a>
+          </li>
+          <li><a class="md:p-4 py-3 px-0 block" href="#">Settings</a></li>
+          <li>
+            <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="#">Logout</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!--header end-->
+
+  <div>
+    <div class="grid grid-cols-1 grid-rows-1 md:grid-cols-2">
+      <div class="me-4 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark dark:text-white text-surface">
+        <div class="p-6">
+          <h5 class="mb-2 text-xl font-medium leading-tight">
+            Special title treatment
+          </h5>
+          <p class="mb-4 text-base">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <button type="button" href="#"
+            class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+            data-twe-ripple-init data-twe-ripple-color="light">
+            Go somewhere
+          </button>
+        </div>
       </div>
 
-      <label for="menu-toggle" class="pointer-cursor md:hidden block">
-        <svg
-          class="fill-current text-gray-900"
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-        >
-          <title>menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-        </svg>
-      </label>
-      <input class="hidden" type="checkbox" id="menu-toggle" />
-
-      <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
-        <nav>
-          <ul
-            class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0"
-          >
-            <li class="hover:bg-violet-600">
-              <a class="md:p-4 py-3 px-0 block" href="#">Contributers</a>
-            </li>
-            <li><a class="md:p-4 py-3 px-0 block" href="#">Settings</a></li>
-            <li>
-              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="#">Logout</a>
-            </li>
-          </ul>
-        </nav>
+      <div class="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark dark:text-white text-surface">
+        <div class="p-6">
+          <h5 class="mb-2 text-xl font-medium leading-tight">
+            Special title treatment
+          </h5>
+          <p class="mb-4 text-base">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <button type="button" href="#"
+            class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+            data-twe-ripple-init data-twe-ripple-color="light">
+            Go somewhere
+          </button>
+        </div>
       </div>
-    </header>
+    </div>
+  </div>
 
-    <script>
-      document
-        .getElementById("menu-toggle")
-        .addEventListener("change", function () {
-          var menu = document.getElementById("menu");
-          if (this.checked) {
-            // When the checkbox is checked, show the menu
-            menu.classList.remove("hidden");
-            menu.classList.add("block");
-          } else {
-            // When the checkbox is not checked, hide the menu
-            menu.classList.add("hidden");
-            menu.classList.remove("block");
-          }
-        });
-    </script>
-  </body>
+
+
+  <script>
+    document
+      .getElementById("menu-toggle")
+      .addEventListener("change", function () {
+        var menu = document.getElementById("menu");
+        if (this.checked) {
+          // When the checkbox is checked, show the menu
+          menu.classList.remove("hidden");
+          menu.classList.add("block");
+        } else {
+          // When the checkbox is not checked, hide the menu
+          menu.classList.add("hidden");
+          menu.classList.remove("block");
+        }
+      });
+  </script>
+</body>
+
 </html>

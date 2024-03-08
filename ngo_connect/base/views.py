@@ -88,3 +88,9 @@ def signin(request):
         else:
             messages.error(request, "Password/email incorrect")
             return render(request, 'signup.html')
+        
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, "Logout Successfull!")
+    return render(request, 'signup.html')

@@ -38,14 +38,36 @@
             </li>
             <li><a class="md:p-4 py-3 px-0 block" href="#">Settings</a></li>
             <li>
-              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="/logout">Logout</a>
+              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="/logout"
+                >Logout</a
+              >
             </li>
           </ul>
         </nav>
       </div>
     </header>
+    <section id="reciever_ngo" class="m-2">
+      <div class="container text-center my-3">
+        <h3>Join with any NGO</h3>
 
-
+        <div class="form-group my-3">
+          <form action="/reciever/reciever_ngo" method="POST" class="form-horizontal">
+              {% csrf_token %}
+              <select id="inputState" class="form-control bg-blue-200" name="reciever_ngo">
+                  <option selected value="Active">Select NGO</option>
+                  {% for user in users %}
+                      {% if user.user_type == 'NGO' %}
+                          <option value="{{ user.user.username }}">{{ user.user.first_name }}</option>
+                      {% endif %}
+                  {% endfor %}
+              </select>
+              <button type="submit" class="bg-blue-100" id="submitButton" disabled>Submit</button>
+          </form>
+      </div>
+      
+  
+      </div>
+    </section>
 
     <script>
       document
@@ -63,5 +85,20 @@
           }
         });
     </script>
+    <!-- script to handle submit button reciever_ngo -->
+    <script>
+      document.getElementById('inputState').addEventListener('change', function() {
+          var submitButton = document.getElementById('submitButton');
+          var selectedValue = this.value;
+          
+          // Enable the submit button if a valid option is selected, otherwise disable it.
+          if(selectedValue !== "Active") {
+              submitButton.disabled = false;
+          } else {
+              submitButton.disabled = true;
+          }
+      });
+    </script>
+    
   </body>
 </html>

@@ -11,8 +11,17 @@ class ReceiverMoreDetails(models.Model):
         blank=True,  # This allows the field to be blank in forms as well.
         related_name='registered_ngos'  # This is optional but recommended for reverse querying.
     )
+
 class RecieverBank(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_transactions', null=True)
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_transactions', null=True)
     current_balance = models.IntegerField(null=True)
-    last_transaction = models.CharField(max_length=255, null=True)
-    transaction_log = models.JSONField(null=True)
+    transaction_id = models.CharField(max_length=10, null=True)
+
+
+class RecieverBankLog(models.Model):
+    transaction_id = models.CharField(max_length=10, primary_key=True)
+    from_user = models.CharField(max_length=20, null=True)
+    to_user = models.CharField(max_length=20, blank=True)
+    date = models.DateField(auto_now=True)
+    time = models.TimeField(auto_now=True)

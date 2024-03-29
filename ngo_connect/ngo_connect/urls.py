@@ -23,5 +23,5 @@ urlpatterns = [
     path('base/', include('base.urls')),
     path('ngo/', include('ngo.urls')),
     path('donor/',include('donor.urls')),
-    path('receiver', include('reciever.urls')),
+    path('reciever/', include('reciever.urls')),
 ]  

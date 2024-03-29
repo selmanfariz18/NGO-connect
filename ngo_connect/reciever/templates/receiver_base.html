@@ -46,6 +46,38 @@
         </nav>
       </div>
     </header>
+
+    {% if reciever.is_reciever_type_defined == True %}
+    <div class="px-5">
+      <h2>Hai {% if reciever.reciver_type == OAH %} Old age home {% else %} {{ reciever.reciever_type }} {% endif %}</h2>
+    </div>
+    {% endif %}
+
+    {% if reciever.is_reciever_type_defined == False %}
+    <section id="reciver_type">
+      <form action="/reciever/reciever_type" method="POST" class="form-horizontal">
+        {% csrf_token %}
+      <div class="flex flex-col p-4 space-y-2 bg-gray-100 rounded-lg">
+        <div class="flex items-center">
+          <input type="radio" value="OAH" name="options" id="old-age-home" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600" />
+          <label for="old-age-home" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">OLD age home</label>
+        </div>
+        <div class="flex items-center">
+          <input type="radio" value="orphanage" name="options" id="orphanage" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600" />
+          <label for="orphanage" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Orphanage</label>
+        </div>
+        <div class="flex items-center">
+          <input type="radio" value="other" name="options" id="other" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600" onclick="toggleInput(true)" />
+          <label for="other" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Other:</label>
+          <input type="text" name="other_value" id="other-input" placeholder="Other" class="ml-2 p-1.5 text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 hidden" onfocus="this.previousElementSibling.checked=true"/>
+        </div>
+      </div>
+      <button type="submit" class="bg-blue-100" id="submit">Submit</button>
+    </form>
+    </section>
+    {% endif %}
+
+    {% if reciever.is_reciever_type_defined == True %}
     <section id="reciever_ngo" class="m-2">
       <div class="container text-center my-3">
         <h3>Join with any NGO</h3>
@@ -63,11 +95,15 @@
               </select>
               <button type="submit" class="bg-blue-100" id="submitButton" disabled>Submit</button>
           </form>
-      </div>
-      
+      </div>    
   
       </div>
     </section>
+    {% if ngo.status == 'pending' %}
+    <h2>request in pending</h2>
+    {% endif %}
+
+    {% endif %}
 
     <script>
       document
@@ -99,6 +135,25 @@
           }
       });
     </script>
+
+<script>
+  function toggleInput(show) {
+    const input = document.getElementById('other-input');
+    if (show) {
+      input.classList.remove('hidden');
+      input.focus();
+    } else {
+      input.classList.add('hidden');
+    }
+  }
+  // Hide the input field initially if 'Other' is not selected
+  document.querySelectorAll('input[type="radio"][name="options"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isOtherSelected = document.getElementById('other').checked;
+      toggleInput(isOtherSelected);
+    });
+  });
+  </script>
     
   </body>
 </html>

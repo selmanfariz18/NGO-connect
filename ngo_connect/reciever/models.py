@@ -3,14 +3,15 @@ from django.contrib.auth.models import AbstractUser, User
 from django.conf import settings
 
 class ReceiverMoreDetails(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     reciever_type = models.CharField(max_length=12, null=True)  # Whether receiver is OLH, Orphanage, etc.
-    registered_ngo = models.ForeignKey(
-        settings.AUTH_USER_MODEL, 
-        on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True,  # This allows the field to be blank in forms as well.
-        related_name='registered_ngos'  # This is optional but recommended for reverse querying.
-    )
+    is_reciever_type_defined = models.BooleanField(default=False)
+    
+class Ngo_reciever(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_ngo_defined = models.BooleanField(default=False)
+    ngo = models.CharField(max_length=12, null=True)
+
 
 class RecieverBank(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_transactions', null=True)

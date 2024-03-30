@@ -11,5 +11,5 @@ class NgoBank(models.Model):
 
 class Reciever_under_ngo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_ngos')
-    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_ngos')
+    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_ngos', unique=True)
     status = models.CharField(max_length=10, choices=(('accepted', 'accepted'), ('rejected', 'rejected'), ('pending', 'pending'),), null=True)

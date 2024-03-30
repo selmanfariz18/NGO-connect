@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -62,24 +62,23 @@ def reciever_type(request):
 
 def reciever_ngo(request):
     if request.method == 'POST':
-        reciever_ngo_email = request.POST.get("reciever_ngo")        
+        reciever_ngo_email = request.POST.get("reciever_ngo")
+        reciever_user = User.objects.get(email=reciever_ngo_email)  # This user is the intended receiver.
 
-            
+        # try:
+        #     reciever = Reciever_under_ngo.objects.get(user=request.user)
+        # except Reciever_under_ngo.DoesNotExist:
+        #     reciever = Reciever_under_ngo(user=request.user)
+        
         try:
-            # Retrieve the User instance using the provided email address
-            user = User.objects.get(email=reciever_ngo_email)
-            
-            # Create a new Reciever_under_ngo instance every time
-            reciever = Reciever_under_ngo(user=user, reciever=request.user, status='pending')
-            reciever.save()  # Save the new instance
-            
-            return HttpResponseRedirect(reverse("receiver_base"))
-        except User.DoesNotExist:
-            # Handle the case where the user does not exist
-            print('User not found.')
-        except Exception as e:
-            # General exception handling
-            print(f'Error: {e}')
+            rec = Reciever_under_ngo.objects.get(reciever=request.user)
+        except Reciever_under_ngo.DoesNotExist:
+            rec = Reciever_under_ngo(reciever=request.user)
+        # rec = get_object_or_404(Reciever_under_ngo, reciever=request.user)
 
+        rec.user= reciever_user
+        rec.reciever = request.user  # Correctly assign the receiver user.
+        rec.status = 'pending'
+        rec.save()
 
         return HttpResponseRedirect(reverse("receiver_base"))

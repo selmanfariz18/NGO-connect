@@ -46,6 +46,15 @@
     </div>
 </header>
 
+
+<section id="request_btn">
+  <div class="text-center">
+    <div class="w-20 h-auto mx-auto bg-slate-600">
+      <a href="/ngo/ngo_join_request">View all request</a>
+    </div>
+  </div>
+</section>
+
 <section class="text-center my-6 mx-4">
     <div class="flex flex-col lg:grid lg:grid-cols-3 gap-3 justify-around rounded-lg shadow-md p-3 my-3">
         <div class="bg-lime-300/75 rounded-lg shadow-md p-3 my-3">
@@ -55,7 +64,7 @@
           {% for r in reciever %}
           {% if r.user == user and r.reciever_type == 'orphanage' %}
           {% for i in reciever_ngo %}
-          {% if i.reciever == user and i.user == me and i.status == 'pending' %}
+          {% if i.reciever == user and i.user == me and i.status == 'accepted' %}
           <div class="shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
             <ul class="mt-3">
               <li class="text-base font-semibold">
@@ -84,7 +93,7 @@
           {% for r in reciever %}
           {% if r.user == user and r.reciever_type == 'OAH' %}
           {% for i in reciever_ngo %}
-          {% if i.reciever == user and i.user == me and i.status == 'pending' %}
+          {% if i.reciever == user and i.user == me and i.status == 'accepted' %}
           <div class="shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
             <ul class="mt-3">
               <li class="text-base font-semibold">
@@ -113,7 +122,7 @@
         {% for r in reciever %}
         {% if r.user == user and r.reciever_type != 'OAH' and r.reciever_type != 'orphanage' %}
         {% for i in reciever_ngo %}
-        {% if i.reciever == user and i.user == me and i.status == 'pending' %}
+        {% if i.reciever == user and i.user == me and i.status == 'accepted' %}
         <div class="shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
           <ul class="mt-3">
             <li class="text-base font-semibold">

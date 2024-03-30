@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -53,3 +53,35 @@ def ngo_all_users(request):
     }
 
     return render(request, 'ngo_all_users.html', context)
+
+
+def ngo_join_request(request):
+
+    reciever_ngo = Reciever_under_ngo.objects.all()
+    user_details = ngousers.objects.all()
+    reciever = ReceiverMoreDetails.objects.all()
+
+    context = {
+        'reciever_ngo' : reciever_ngo,
+        'reciever' : reciever,
+        'user_details' : user_details,
+    }
+
+    return render(request, 'ngo_join_request.html', context)
+
+
+def accept_request(request):   
+    if request.method == 'POST':
+        id = request.POST['id']
+        req = get_object_or_404(Reciever_under_ngo, id=id)
+        req.status = "accepted"
+        req.save()
+        return HttpResponseRedirect(reverse("ngo_join_request"))
+    
+def reject_request(request):
+    if request.method == 'POST':
+        id = request.POST['id']
+        req = get_object_or_404(Reciever_under_ngo, id=id)
+        req.status = "rejected"
+        req.save()
+        return HttpResponseRedirect(reverse("ngo_join_request"))

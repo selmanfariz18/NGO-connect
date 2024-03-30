@@ -62,24 +62,24 @@ def reciever_type(request):
 
 def reciever_ngo(request):
     if request.method == 'POST':
-        reciever_ngo_email = request.POST.get("reciever_ngo")
-        
+        reciever_ngo_email = request.POST.get("reciever_ngo")        
+
+            
         try:
-            # Attempt to retrieve the User instance using the provided email address
+            # Retrieve the User instance using the provided email address
             user = User.objects.get(email=reciever_ngo_email)
             
-            try:
-                # Now, we use the retrieved User instance
-                reciever = Reciever_under_ngo.objects.get(user=user)
-            except Reciever_under_ngo.DoesNotExist:
-                # If a Reciever_under_ngo instance does not exist, we create one using the User instance
-                reciever = Reciever_under_ngo(user=user)
-            reciever.reciever = request.user
-            reciever.status = 'pending'
-            reciever.save()  # Don't forget to save the new instance
-                
+            # Create a new Reciever_under_ngo instance every time
+            reciever = Reciever_under_ngo(user=user, reciever=request.user, status='pending')
+            reciever.save()  # Save the new instance
+            
             return HttpResponseRedirect(reverse("receiver_base"))
-        except:
-            print('error')
+        except User.DoesNotExist:
+            # Handle the case where the user does not exist
+            print('User not found.')
+        except Exception as e:
+            # General exception handling
+            print(f'Error: {e}')
+
 
         return HttpResponseRedirect(reverse("receiver_base"))

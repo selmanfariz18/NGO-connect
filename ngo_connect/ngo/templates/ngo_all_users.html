@@ -15,7 +15,7 @@
     class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md"
 >
     <div class="flex-1 flex justify-between items-center">
-        <a href="#" class="text-xl">NGO-Connect</a>
+        <a href="/ngo/ngo_base" class="text-xl">NGO-Connect</a>
     </div>
 
     <label for="menu-toggle" class="pointer-cursor lg:hidden block">
@@ -37,7 +37,6 @@
             <ul
                 class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0"
             >
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li>
                 <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="#">Contributers</a></li>
                 <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="#">Settings</a></li>
                 <li><a class="lg:p-4 py-3 rounded-md bg-orange-200 px-0 mx-1 block hover:bg-red-500" href="/logout">Logout</a></li>
@@ -45,6 +44,8 @@
         </nav>
     </div>
 </header>
+
+<h1 class="text-center">All users</h1>
 
 <section class="text-center my-6 mx-4">
     <div class="flex flex-col lg:grid lg:grid-cols-3 gap-3 justify-around rounded-lg shadow-md p-3 my-3">
@@ -54,8 +55,6 @@
           {% if detail.user_type == "Receiver" %}
           {% for r in reciever %}
           {% if r.user == user and r.reciever_type == 'orphanage' %}
-          {% for i in reciever_ngo %}
-          {% if i.reciever == user and i.user == me and i.status == 'pending' %}
           <div class="shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
             <ul class="mt-3">
               <li class="text-base font-semibold">
@@ -64,13 +63,10 @@
               <li class="text-left">EMAIL: {{ user.username }}</li>
               <li class="text-left">NAME: {{ user.first_name }}</li>
               <li class="text-left">Type: {{ r.reciever_type }} </li>
-              <li class="text-left">Status: {{ i.status }} </li>
               <li class="text-left">ADDRESS: {{ detail.address }}</li>
               <li class="text-left">PINCODE: {{ detail.pincode }}</li>
             </ul>
           </div>
-          {% endif %}
-          {% endfor %}
           {% endif %}
           {% endfor %}
           {% endif %}
@@ -83,8 +79,6 @@
           {% if detail.user_type == "Receiver" %}
           {% for r in reciever %}
           {% if r.user == user and r.reciever_type == 'OAH' %}
-          {% for i in reciever_ngo %}
-          {% if i.reciever == user and i.user == me and i.status == 'pending' %}
           <div class="shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
             <ul class="mt-3">
               <li class="text-base font-semibold">
@@ -93,13 +87,10 @@
               <li class="text-left">EMAIL: {{ user.username }}</li>
               <li class="text-left">NAME: {{ user.first_name }}</li>
               <li class="text-left">Type: {{ r.reciever_type }} </li>
-              <li class="text-left">Status: {{ i.status }} </li>
               <li class="text-left">ADDRESS: {{ detail.address }}</li>
               <li class="text-left">PINCODE: {{ detail.pincode }}</li>
             </ul>
           </div>
-          {% endif %}
-          {% endfor %}
           {% endif %}
           {% endfor %}
           {% endif %}
@@ -112,23 +103,18 @@
         {% if detail.user_type == "Receiver" %}
         {% for r in reciever %}
         {% if r.user == user and r.reciever_type != 'OAH' and r.reciever_type != 'orphanage' %}
-        {% for i in reciever_ngo %}
-        {% if i.reciever == user and i.user == me and i.status == 'pending' %}
         <div class="shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
           <ul class="mt-3">
             <li class="text-base font-semibold">
             
             </li>
-            <li class="text-left">EMAIL: {{ i.user.username }}</li>
-            <li class="text-left">NAME: {{ i.user.first_name }}</li>
+            <li class="text-left">EMAIL: {{ user.username }}</li>
+            <li class="text-left">NAME: {{ user.first_name }}</li>
             <li class="text-left">Type: {{ r.reciever_type }} </li>
-            <li class="text-left">Status: {{ i.status }} </li>
             <li class="text-left">ADDRESS: {{ detail.address }}</li>
             <li class="text-left">PINCODE: {{ detail.pincode }}</li>
           </ul>
         </div>
-        {% endif %}
-        {% endfor %}
         {% endif %}
         {% endfor %}
         {% endif %}

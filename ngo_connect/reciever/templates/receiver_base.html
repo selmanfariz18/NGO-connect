@@ -79,7 +79,7 @@
 
     {% if reciever.is_reciever_type_defined == True %}
     <section id="reciever_ngo">
-      {% if ngo.status == Null or ngo.status == 'rejected' %}
+      {% if ngo.status == None or ngo.status == 'rejected' %}
       <div class="container text-center my-3 mx-auto">
         {% if ngo.status == 'rejected' %}
         <h3>Rejected by {{ ngo.user.first_name }}</h3>

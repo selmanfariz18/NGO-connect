@@ -10,7 +10,6 @@ class NgoBank(models.Model):
     transaction_log = models.JSONField(null=True)
 
 class Reciever_under_ngo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Specify a unique related_name for this ForeignKey
-    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ngo_recievers', null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_ngos')
+    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_ngos')
     status = models.CharField(max_length=10, choices=(('accepted', 'accepted'), ('rejected', 'rejected'), ('pending', 'pending'),), null=True)

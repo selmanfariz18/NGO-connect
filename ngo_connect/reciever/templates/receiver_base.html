@@ -49,7 +49,7 @@
 
     {% if reciever.is_reciever_type_defined == True %}
     <div class="px-5">
-      <h2>Hai {% if reciever.reciver_type == OAH %} Old age home {% else %} {{ reciever.reciever_type }} {% endif %}</h2>
+      <h2>Hai {% if reciever.reciver_type == 'OAH' %} Old age home {% else %} {{ reciever.reciever_type }} {% endif %}</h2>
     </div>
     {% endif %}
 
@@ -78,8 +78,12 @@
     {% endif %}
 
     {% if reciever.is_reciever_type_defined == True %}
-    <section id="reciever_ngo" class="m-2">
-      <div class="container text-center my-3">
+    <section id="reciever_ngo">
+      {% if ngo.status == Null or ngo.status == 'rejected' %}
+      <div class="container text-center my-3 mx-auto">
+        {% if ngo.status == 'rejected' %}
+        <h3>Rejected by {{ ngo.user.first_name }}</h3>
+        {% endif %}
         <h3>Join with any NGO</h3>
 
         <div class="form-group my-3">
@@ -95,14 +99,18 @@
               </select>
               <button type="submit" class="bg-blue-100" id="submitButton" disabled>Submit</button>
           </form>
-      </div>    
+        </div>    
   
       </div>
+      {% elif ngo.status == 'pending' %}
+      <div class="container text-center my-3 mx-auto">
+        <h2>request in pending</h2>
+      </div>
+      {% endif %}
     </section>
-    {% if ngo.status == 'pending' %}
-    <h2>request in pending</h2>
-    {% endif %}
 
+    
+    {{ ngo.status }}
     {% endif %}
 
     <script>

@@ -11,4 +11,11 @@ from base.models import ngousers
 
 @login_required(login_url="signup")
 def donor_base(request):
-    return render(request, 'donor_base.html')
+
+    ngos = ngousers.objects.filter(user_type='NGO')
+
+    context = {
+        'ngos': ngos,
+    }
+
+    return render(request, 'donor_base.html', context)

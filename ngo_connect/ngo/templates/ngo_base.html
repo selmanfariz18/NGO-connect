@@ -46,17 +46,21 @@
     </div>
 </header>
 
-
+{% if ngo_request_count %}
 <section id="request_btn">
   <div class="text-center">
-    <div class="w-20 h-auto mx-auto bg-slate-600">
+    <div class="mt-4 w-24 h-auto mx-auto bg-slate-600 rounded-lg">
       <a href="/ngo/ngo_join_request">View all request</a>
     </div>
   </div>
 </section>
+{% endif %}
 
 <section class="text-center my-6 mx-4">
     <div class="flex flex-col lg:grid lg:grid-cols-3 gap-3 justify-around rounded-lg shadow-md p-3 my-3">
+
+
+      {% if ngo_request_orphanage_count != 0 %}
         <div class="bg-lime-300/75 rounded-lg shadow-md p-3 my-3">
             <h2 class="text-xl font-bold">Orphanages</h2>
           {% for user in users %} {% for detail in user_details %} {% if detail.user == user %}
@@ -85,7 +89,10 @@
           {% endif %}
           {% endif %} {% endfor %} {% endfor %}
         </div>
-    
+      {% endif %}
+      
+
+    {% if ngo_request_oah_count != 0 %}
         <div class="bg-lime-300/75 rounded-lg shadow-md p-3 my-3">
           <h2 class="text-xl font-bold">OAH</h2>
           {% for user in users %} {% for detail in user_details %} {% if detail.user == user %}
@@ -114,7 +121,10 @@
           {% endif %}
           {% endif %} {% endfor %} {% endfor %}
         </div>
+        {% endif %}
 
+
+      {% if ngo_request_non_oah_orphanage_count != 0 %}
         <div class="bg-lime-300/75 rounded-lg shadow-md p-3 my-3">
           <h2 class="text-xl font-bold">Other Recivers</h2>
         {% for user in users %} {% for detail in user_details %} {% if detail.user == user %}
@@ -143,6 +153,7 @@
         {% endif %}
         {% endif %} {% endfor %} {% endfor %}
       </div>
+    {% endif %}
     
         <div class="bg-lime-300/75 rounded-lg shadow-md p-3 my-3">
           <h2 class="text-xl font-bold">Users</h2>

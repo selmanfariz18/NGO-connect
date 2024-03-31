@@ -23,6 +23,25 @@ def ngo_base(request):
     reciever = ReceiverMoreDetails.objects.all()
     reciever_ngo = Reciever_under_ngo.objects.all()
     count = 1
+    ngo_request_count = Reciever_under_ngo.objects.filter(user=request.user, status='pending')
+    ngo_request_oah_count = Reciever_under_ngo.objects.filter(
+        user=request.user,
+        status='accepted',
+        reciever__receivermoredetails__reciever_type='OAH'  # Spanning relationships
+    ).distinct().count()
+    ngo_request_orphanage_count = Reciever_under_ngo.objects.filter(
+        user=request.user,
+        status='accepted',
+        reciever__receivermoredetails__reciever_type='orphanage'  # Spanning relationships
+    ).distinct().count()
+    ngo_request_non_oah_orphanage_count = Reciever_under_ngo.objects.filter(
+        user=request.user,
+        status='accepted'
+    ).exclude(
+        reciever__receivermoredetails__reciever_type__in=['OAH', 'orphanage']
+    ).distinct().count()
+
+    # print(ngo_request_non_oah_orphanage_count)
 
     context = {
         'me' : user_name,
@@ -31,6 +50,10 @@ def ngo_base(request):
         'count' : count,
         'reciever' : reciever,
         'reciever_ngo' : reciever_ngo,
+        'ngo_request_count' : ngo_request_count,
+        'ngo_request_oah_count' : ngo_request_oah_count,
+        'ngo_request_orphanage_count' : ngo_request_orphanage_count,
+        'ngo_request_non_oah_orphanage_count' : ngo_request_non_oah_orphanage_count,
     }
 
     return render(request, 'ngo_base.html', context)

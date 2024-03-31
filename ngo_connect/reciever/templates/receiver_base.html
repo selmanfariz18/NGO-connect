@@ -11,7 +11,7 @@
       class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md"
     >
       <div class="flex-1 flex justify-between items-center">
-        <a href="#" class="text-xl">NGO-Connect</a>
+        <a href="#" class="text-xl">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
       </div>
 
       <label for="menu-toggle" class="pointer-cursor md:hidden block">
@@ -106,11 +106,13 @@
       <div class="container text-center my-3 mx-auto">
         <h2>request in pending</h2>
       </div>
+      {% elif ngo.status == 'accepted' %}
+      <div class="container text-center my-3 mx-auto">
+        <h2>You are now under {{ ngo.user.first_name }} NGO</h2>
+      </div>
       {% endif %}
-    </section>
-
-    
-    {{ ngo.status }}
+    </section>    
+    <!-- {{ ngo.status }} -->
     {% endif %}
 
     <script>

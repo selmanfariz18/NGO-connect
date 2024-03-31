@@ -16,7 +16,7 @@ from ngo.models import Reciever_under_ngo
 
 @login_required(login_url="signup")
 def ngo_base(request):
-
+    # view to load ngo_base page
     user_name=request.user
     users = User.objects.all()
     user_details = ngousers.objects.all()
@@ -60,7 +60,7 @@ def ngo_base(request):
 
 
 def ngo_all_users(request):
-
+    # view to load all recievers detail page
     user_name=request.user
     users = User.objects.all()
     user_details = ngousers.objects.all()
@@ -79,7 +79,7 @@ def ngo_all_users(request):
 
 
 def ngo_join_request(request):
-
+    # view to load page cotain request from recievers to join ngo
     reciever_ngo = Reciever_under_ngo.objects.all()
     user_details = ngousers.objects.all()
     reciever = ReceiverMoreDetails.objects.all()
@@ -93,7 +93,8 @@ def ngo_join_request(request):
     return render(request, 'ngo_join_request.html', context)
 
 
-def accept_request(request):   
+def accept_request(request): 
+    # view to accept a request from reciever  
     if request.method == 'POST':
         id = request.POST['id']
         req = get_object_or_404(Reciever_under_ngo, id=id)
@@ -102,6 +103,7 @@ def accept_request(request):
         return HttpResponseRedirect(reverse("ngo_join_request"))
     
 def reject_request(request):
+    # view to reject a request from reciever
     if request.method == 'POST':
         id = request.POST['id']
         req = get_object_or_404(Reciever_under_ngo, id=id)

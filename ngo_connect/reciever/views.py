@@ -18,7 +18,7 @@ from ngo.models import Reciever_under_ngo
 
 @login_required(login_url="signup")
 def receiver_base(request):
-
+    # view to load reciever_base page
     users = ngousers.objects.all()
     try:
         receiver = ReceiverMoreDetails.objects.get(user=request.user)
@@ -44,6 +44,7 @@ def receiver_base(request):
     return render(request, 'receiver_base.html', context)
 
 def reciever_type(request):
+    # view to set a reciever type
     if request.method == 'POST':
         reciever_type = request.POST.get("options")
         if reciever_type == "other":
@@ -61,14 +62,10 @@ def reciever_type(request):
         return HttpResponseRedirect(reverse("receiver_base"))
 
 def reciever_ngo(request):
+    # view to sent a request to ngo and make status as pending
     if request.method == 'POST':
         reciever_ngo_email = request.POST.get("reciever_ngo")
         reciever_user = User.objects.get(email=reciever_ngo_email)  # This user is the intended receiver.
-
-        # try:
-        #     reciever = Reciever_under_ngo.objects.get(user=request.user)
-        # except Reciever_under_ngo.DoesNotExist:
-        #     reciever = Reciever_under_ngo(user=request.user)
         
         try:
             rec = Reciever_under_ngo.objects.get(reciever=request.user)

@@ -14,6 +14,10 @@ class Ngo_reciever(models.Model):
 
 
 class RecieverBank(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    current_balance = models.IntegerField(null=True)
+
+class RecieverBankTransactions(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_transactions', null=True)
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_transactions', null=True)
     current_balance = models.IntegerField(null=True)

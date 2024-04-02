@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 
+
 # Create your views here.
 
 
@@ -36,6 +37,7 @@ def signup(request):
                 profile = ngousers.objects.create(
                     user=user, phone_number=phone_number, address=address, pincode=pincode, user_type=user_type)
                 profile.save()
+
                 messages.success(request, 'Account created successfully.')
                 return render(request, 'signup.html')
         else:

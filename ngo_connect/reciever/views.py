@@ -1,10 +1,11 @@
+from datetime import timezone
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from base.models import ngousers
+from base.models import ngousers, Notifications
 from django.contrib.auth.models import User
 from reciever.models import ReceiverMoreDetails
 from django.http import Http404
@@ -39,11 +40,16 @@ def receiver_base(request):
         # reciever_balance.current_balance = bank_balance
         # reciever_balance.save()
 
+    notifications = Notifications.objects.filter(user=request.user)
+    notification_count = notifications.count()
+
     context = {
         'users' : users,
         'reciever' : receiver,
         'ngo' : ngo,
         'reciever_balance' : reciever_balance,
+        'notifications' : notifications,
+        'notification_count' : notification_count,
     }
 
     # for user in users:
@@ -70,6 +76,7 @@ def reciever_type(request):
         reciever.is_reciever_type_defined = True
         reciever.save()
 
+
         try:
             reciever_balance = RecieverBank.objects.get(user=request.user)
         except RecieverBank.DoesNotExist:
@@ -77,6 +84,15 @@ def reciever_type(request):
 
         reciever_balance.current_balance = bank_balance
         reciever_balance.save()
+
+        #notification sending
+        notification = Notifications.objects.create(
+            user=request.user,
+            name="Details Updated",
+            desc="Reciever type and bank balance updated",
+        )
+        notification.save()
+
 
         return HttpResponseRedirect(reverse("receiver_base"))
 

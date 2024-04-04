@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{{user.username}}|NGO</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <style>
+      .notification-icon {
+          position: relative;
+          display: inline-block;
+      }
+
+      .badge {
+          position: absolute;
+          top: -10px;
+          right: -12px;
+          background-color: red;
+          color: white;
+          border-radius: 50%;
+          padding: 2px 6px;
+          font-size: 10px;
+          height: 25px;
+      }
+    </style>
 </head>
 <body class="font-sans" style="background-image: url('data:image/jpeg;base64,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'); 
             background-size: cover;
@@ -37,14 +56,60 @@
             <ul
                 class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0"
             >
+            <li class="hover:bg-violet-600">
+              <a class="md:p-4 py-3 px-0 block">Balance: ₹{{bank.current_balance}}</a>
+            </li>
+            <li class="relative">
+              <a href="#" class="px-2" id="notificationButton">
+                <div class="notification-icon">
+                    <i class="fas fa-bell fa-2x"></i> <!-- Replace with your preferred icon -->
+                    <span class="badge">{{ notification_count }}</span>
+                </div>
+              </a>
+              <!-- Dropdown Menu -->
+              <div class="absolute right-0 mt-2 w-56 bg-white shadow-xl hidden" id="notificationDropdown">
+                <!-- Horizontal Card 1 -->
+                {% for i in notifications %}
+                <div class="p-4 border-b border-gray-200 flex justify-between items-start">
+                  <div>
+                    <h6 class="text-sm font-semibold text-gray-700">{{ i.name }}</h6>
+                    <p class="text-xs text-gray-600">{{ i.desc }}</p>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                {% endfor %}
+                <!-- Horizontal Card 2 --> 
+              </div>
+            </li>
                 <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li>
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="#">Contributers</a></li>
+                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_donor_users">Contributers</a></li>
                 <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="#">Settings</a></li>
                 <li><a class="lg:p-4 py-3 rounded-md bg-orange-200 px-0 mx-1 block hover:bg-red-500" href="/logout">Logout</a></li>
             </ul>
         </nav>
     </div>
 </header>
+
+{% if balance.is_balance_defined == False %}
+<section id="reciver_type" class="flex justify-center items-center">
+  <div class="container my-3 mx-auto flex justify-center text-center">
+    <form action="/ngo/balance_sett" method="POST" class="flex flex-col items-center p-4 bg-green-100 rounded-lg w-80">
+        {% csrf_token %}
+      <div class="flex flex-col p-4 space-y-2 bg-green-100 rounded-lg w-80">
+        <div class="flex items-center py-3">
+          <p class="ml-2 text-sm font-medium text-black-900 dark:text-black-300" >Bank balance:</p>
+          <input type="number" name="bank_balance" id="" placeholder="Bank Balance" required class="ml-2 p-1.5 text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
+        </div>
+      </div>
+      <button type="submit" class="bg-blue-100" id="submit">Submit</button>
+    </form>
+  </div>
+</section>
+{% endif %}
+
+
 
 {% if ngo_request_count %}
 <section id="request_btn">
@@ -154,25 +219,6 @@
         {% endif %} {% endfor %} {% endfor %}
       </div>
     {% endif %}
-    
-        <div class="bg-lime-300/75 rounded-lg shadow-md p-3 my-3">
-          <h2 class="text-xl font-bold">Users</h2>
-          {% for user in users %} {% for detail in user_details %} {% if detail.user == user %}
-          {% if detail.user_type == "Donor" %}
-          <div class="shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
-            <ul class="mt-3">
-              <li class="text-base font-semibold">
-              
-              </li>
-              <li class="text-left">EMAIL: {{ user.username }}</li>
-              <li class="text-left">NAME: {{ user.first_name }}</li>
-              <li class="text-left">ADDRESS: {{ detail.address }}</li>
-              <li class="text-left">PINCODE: {{ detail.pincode }}</li>
-            </ul>
-          </div>
-          {% endif %}
-          {% endif %} {% endfor %} {% endfor %}
-        </div>
       </div>
     </section>
 
@@ -191,6 +237,18 @@
             menu.classList.remove("block");
           }
         });
+    </script>
+    <script>
+      // Simple JavaScript to toggle the dropdown visibility
+      document.getElementById('notificationButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        var dropdown = document.getElementById('notificationDropdown');
+        if (dropdown.classList.contains('hidden')) {
+          dropdown.classList.remove('hidden');
+        } else {
+          dropdown.classList.add('hidden');
+        }
+      });
     </script>
   </body>
 </html>

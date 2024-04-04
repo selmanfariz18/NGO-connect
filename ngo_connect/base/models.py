@@ -13,6 +13,8 @@ class ngousers(models.Model):
     phone_number = models.CharField(max_length=13, null=True)
     address = models.CharField(max_length=100, null=True)
     pincode = models.CharField(max_length=10, null=True)
+    is_balance_defined =models.BooleanField(default=False)
+
 
 class Notifications(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -6,9 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from base.models import ngousers
 from django.contrib.auth.models import User
-from base.models import ngousers
+from base.models import ngousers, Notifications
 from reciever.models import ReceiverMoreDetails
-from ngo.models import Reciever_under_ngo
+from ngo.models import Reciever_under_ngo, NgoBank
 
 
 # Create your views here.
@@ -43,6 +43,19 @@ def ngo_base(request):
 
     # print(ngo_request_non_oah_orphanage_count)
 
+    # bank = NgoBank.objects.get(user=request.user)
+    try:
+        bank = NgoBank.objects.get(user=request.user)
+    except NgoBank.DoesNotExist:
+        bank = NgoBank(user=request.user)
+
+    notifications = Notifications.objects.filter(user=request.user)
+    notification_count = notifications.count()
+
+    balance = ngousers.objects.get(user=request.user)
+
+    # print(balance.is_balance_defined)
+
     context = {
         'me' : user_name,
         'users' : users,
@@ -54,6 +67,10 @@ def ngo_base(request):
         'ngo_request_oah_count' : ngo_request_oah_count,
         'ngo_request_orphanage_count' : ngo_request_orphanage_count,
         'ngo_request_non_oah_orphanage_count' : ngo_request_non_oah_orphanage_count,
+        'bank' : bank,
+        'notifications' : notifications,
+        'notification_count' : notification_count,
+        'balance' : balance,
     }
 
     return render(request, 'ngo_base.html', context)
@@ -110,3 +127,46 @@ def reject_request(request):
         req.status = "rejected"
         req.save()
         return HttpResponseRedirect(reverse("ngo_join_request"))
+    
+
+def balance_sett(request):
+    if request.method == 'POST':
+        bank_balance = request.POST['bank_balance']
+
+        try:
+            bank = NgoBank.objects.get(user=request.user)
+        except NgoBank.DoesNotExist:
+            bank = NgoBank(user=request.user)
+
+        bank.current_balance = bank_balance
+        bank.save()
+
+        balance = ngousers.objects.get(user=request.user)
+        balance.is_balance_defined = True
+        balance.save()
+
+        notification = Notifications.objects.create(
+            user=request.user,
+            name="Details Updated",
+            desc="Bank balance updated",
+        )
+        notification.save()
+
+
+        return HttpResponseRedirect(reverse("ngo_base"))
+
+def ngo_donor_users(request):
+    # view to load all recievers detail page
+    user_name=request.user
+    users = User.objects.all()
+    user_details = ngousers.objects.all()
+    count = 1
+
+    context = {
+        'user' : user_name,
+        'users' : users,
+        'user_details' : user_details,
+        'count' : count,
+    }
+
+    return render(request, 'ngo_donors.html', context)

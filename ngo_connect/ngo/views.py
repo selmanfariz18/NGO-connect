@@ -152,7 +152,6 @@ def balance_sett(request):
         )
         notification.save()
 
-
         return HttpResponseRedirect(reverse("ngo_base"))
 
 def ngo_donor_users(request):

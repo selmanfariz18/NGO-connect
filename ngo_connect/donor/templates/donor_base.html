@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{user.username}}|NGO</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+    <style>
+           .notification-icon {
+          position: relative;
+          display: inline-block;
+      }
+
+      .badge {
+          position: absolute;
+          top: -10px;
+          right: -12px;
+          background-color: red;
+          color: white;
+          border-radius: 50%;
+          padding: 2px 6px;
+          font-size: 10px;
+          height: 25px;
+      }
+    </style>
   </head>
   <body style="font-family: sans-serif">
     <header
@@ -33,6 +53,30 @@
           <ul
             class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0"
           >
+          <li class="relative">
+            <a href="#" class="px-2" id="notificationButton">
+              <div class="notification-icon">
+                  <i class="fas fa-bell fa-2x"></i> <!-- Replace with your preferred icon -->
+                  <span class="badge">{{ notification_count }}</span>
+              </div>
+            </a>
+            <!-- Dropdown Menu -->
+            <div class="absolute right-0 mt-2 w-56 bg-white shadow-xl hidden" id="notificationDropdown">
+              <!-- Horizontal Card 1 -->
+              {% for i in notifications %}
+              <div class="p-4 border-b border-gray-200 flex justify-between items-start">
+                <div>
+                  <h6 class="text-sm font-semibold text-gray-700">{{ i.name }}</h6>
+                  <p class="text-xs text-gray-600">{{ i.desc }}</p>
+                </div>
+                <button class="text-gray-400 hover:text-gray-500">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+              {% endfor %}
+              <!-- Horizontal Card 2 --> 
+            </div>
+          </li>
             <li class="hover:bg-violet-600">
               <a class="md:p-4 py-3 px-0 block" href="#">Contributers</a>
             </li>
@@ -51,31 +95,39 @@
   
       <div class="text-center">
         {% if ngos %}
-        {% for ngo in ngos %}
-          <div class="w-96 mx-auto shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
-              <ul class="mt-3">
-                  <li class="text-left">EMAIL: {{ ngo.user.username }}</li>
-                  <li class="text-left">NAME: {{ ngo.user.first_name }}</li>
-                  <li class="text-left">ADDRESS: {{ ngo.address }}</li>
-                  <li class="text-left">PINCODE: {{ ngo.pincode }}</li>
-              </ul>
-              <br>
-              <div class="">     
-                  <!-- <form method="post" action="/ngo/accept_request/">
-                      {% csrf_token %}
-                      <input type="hidden" name="id" value="{{ i.id }}">
-                      <button type="submit" class="my-3 px-3 bg-green-500">accept</button>
-                  </form>
-                  <form method="post" action="/ngo/reject_request/">
-                      {% csrf_token %}
-                      <input type="hidden" name="id" value="{{ i.id }}">
-                      <button type="submit" class="my-3 px-3 bg-red-500">reject</button>
-                  </form> -->
-              </div>
-          </div>
-          {% endfor %}
-          {% endif %}
-      </div>
+        <!-- Flex container for cards -->
+        <div class="flex flex-wrap justify-center">
+            {% for ngo in ngos %}
+            <!-- Each card -->
+            <div class="w-96 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
+                <ul class="mt-3">
+                    <li class="text-left">EMAIL: {{ ngo.user.username }}</li>
+                    <li class="text-left">NAME: {{ ngo.user.first_name }}</li>
+                    <li class="text-left">ADDRESS: {{ ngo.address }}</li>
+                    <li class="text-left">PINCODE: {{ ngo.pincode }}</li>
+                    <li>{{ngo.user.id}}</li>
+                </ul>
+                <br>
+                <!-- Flex container for buttons -->
+                <div class="flex justify-around">     
+                    <form method="post" action="/donor/donate_btn_request">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ ngo }}">
+                        <!-- <input type="hidden" name="user" value="{{ ngo }}">   -->
+                        <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
+                    </form>
+                    <!-- <form method="post" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ ngo.id }}"> 
+                        <button type="submit" class="my-3 px-3 bg-red-500">reject</button>
+                    </form> -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    
   
   
   </section>
@@ -98,5 +150,18 @@
           }
         });
     </script>
+
+<script>
+  // Simple JavaScript to toggle the dropdown visibility
+  document.getElementById('notificationButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    var dropdown = document.getElementById('notificationDropdown');
+    if (dropdown.classList.contains('hidden')) {
+      dropdown.classList.remove('hidden');
+    } else {
+      dropdown.classList.add('hidden');
+    }
+  });
+</script>
   </body>
 </html>

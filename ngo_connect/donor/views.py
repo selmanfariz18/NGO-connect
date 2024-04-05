@@ -18,16 +18,29 @@ import uuid
 
 @login_required(login_url="signup")
 def donor_base(request):
-
+    # Fetch all NGO users
     ngos = ngousers.objects.filter(user_type='NGO')
+
+    # Prepare a list to hold NGO data with bank balance
+    ngos_with_balance = []
+    for ngo in ngos:
+        # Try to fetch the NgoBank object associated with the current user
+        ngo_bank = NgoBank.objects.filter(user=ngo.user).first()
+        # If there is an associated NgoBank object, fetch the balance, else set to None
+        ngo_bank_balance = ngo_bank.current_balance if ngo_bank else None
+        # Append the NGO and its bank balance to the list
+        ngos_with_balance.append({
+            'ngo': ngo,
+            'bank_balance': ngo_bank_balance,
+        })
 
     notifications = Notifications.objects.filter(user=request.user)
     notification_count = notifications.count()
 
     context = {
-        'ngos': ngos,
-        'notifications' : notifications,
-        'notification_count' : notification_count,
+        'ngos_with_balance': ngos_with_balance,
+        'notifications': notifications,
+        'notification_count': notification_count,
     }
 
     return render(request, 'donor_base.html', context)

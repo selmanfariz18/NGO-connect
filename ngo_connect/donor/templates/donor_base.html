@@ -94,39 +94,35 @@
       <h1 class="text-center">All NGO's</h1>
   
       <div class="text-center">
-        {% if ngos %}
+        {% if ngos_with_balance %}
         <!-- Flex container for cards -->
         <div class="flex flex-wrap justify-center">
-            {% for ngo in ngos %}
+            {% for item in ngos_with_balance %}
             <!-- Each card -->
             <div class="w-96 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
                 <ul class="mt-3">
-                    <li class="text-left">EMAIL: {{ ngo.user.username }}</li>
-                    <li class="text-left">NAME: {{ ngo.user.first_name }}</li>
-                    <li class="text-left">ADDRESS: {{ ngo.address }}</li>
-                    <li class="text-left">PINCODE: {{ ngo.pincode }}</li>
-                    <!-- <li>{{ngo.user.id}}</li> -->
+                    <li class="text-left">EMAIL: {{ item.ngo.user.username }}</li>
+                    <li class="text-left">NAME: {{ item.ngo.user.first_name }}</li>
+                    <li class="text-left">ADDRESS: {{ item.ngo.address }}</li>
+                    <li class="text-left">PINCODE: {{ item.ngo.pincode }}</li>
+                    <!-- Displaying bank balance -->
+                    <li class="text-left">BANK BALANCE: ₹{{ item.bank_balance|default:"Balance not available" }}</li>
                 </ul>
                 <br>
                 <!-- Flex container for buttons -->
                 <div class="flex justify-around">     
                     <form method="post" action="/donor/donate_btn_request">
                         {% csrf_token %}
-                        <input type="hidden" name="id" value="{{ ngo.id }}">
-                        <!-- <input type="hidden" name="user" value="{{ ngo }}">   -->
+                        <input type="hidden" name="id" value="{{ item.ngo.id }}">
                         <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
                     </form>
-                    <!-- <form method="post" action="">
-                        {% csrf_token %}
-                        <input type="hidden" name="id" value="{{ ngo.id }}"> 
-                        <button type="submit" class="my-3 px-3 bg-red-500">reject</button>
-                    </form> -->
                 </div>
             </div>
             {% endfor %}
         </div>
         {% endif %}
     </div>
+    
     
   
   

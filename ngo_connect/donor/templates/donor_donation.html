@@ -42,9 +42,10 @@
           <p class="ml-2 text-sm font-medium text-black-900 dark:text-black-300" >Amount:</p>
           <input type="number" name="amount" id="" placeholder="Bank Balance" required class="ml-2 p-1.5 text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
         </div>
+        <!-- <li>{{ from_user }},{{ to_user }}</li> -->
         <input type="hidden" name="from_user" value="{{ from_user }}">
         <input type="hidden" name="to_user" value="{{ to_user }}">  
-        <li>{{ from_user }},{{ to_user }}</li>
+        
       </div>
       <button type="submit" class="bg-blue-100" id="submit">Submit</button>
     </form>

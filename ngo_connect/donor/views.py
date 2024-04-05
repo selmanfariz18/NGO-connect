@@ -40,61 +40,58 @@ def donate_btn_request(request):
         # user = request.POST['user']
         # req = get_object_or_404(User, id=id)
 
-        
+        ngo_user = get_object_or_404(ngousers, id=id).user
 
         context = {
-            'from_user' : request.user,
-            'to_user' : id,
+            'from_user' : request.user.email,
+            'to_user' : ngo_user.email,
         }
 
-        print(request.user)
+        # print(user)
         return render(request, 'donor_donation.html', context)
     
 
 def donation(request):
     if request.method == 'POST':
-        amount = request.POST['amount']
-        from_user = request.POST['from_user']
-        to_user = request.POST['to_user']
+        amount = int(request.POST['amount'])  # Convert amount to integer
+        from_user_email = request.POST['from_user']
+        to_user_email = request.POST['to_user']
+
+        # Get User objects for both donor and recipient
+        from_user = get_object_or_404(User, email=from_user_email)
+        to_user = get_object_or_404(User, email=to_user_email)
+
+        # Generate a unique transaction ID
         unique_id = base64.urlsafe_b64encode(uuid.uuid4().bytes).rstrip(b'=').decode('ascii')
         transaction_id = unique_id[:10]
 
-
-        from_user = get_object_or_404(User, email=from_user)
-        to_user = get_object_or_404(User, email=to_user)
-        try:
-            transaction = NgoBankTransactions.objects.get(from_user=from_user, to_user=to_user)
-        except NgoBankTransactions.DoesNotExist:
-            transaction = NgoBankTransactions(from_user=from_user, to_user=to_user)
-
+        # Handling the transaction
+        transaction, _ = NgoBankTransactions.objects.get_or_create(from_user=from_user, to_user=to_user)
         transaction.amount = amount
         transaction.transaction_id = transaction_id
         transaction.save()
 
-        try:
-            bank = NgoBank.objects.get(user=to_user)
-        except NgoBank.DoesNotExist:
-            bank = NgoBank(user=request.user)
-
-        bank.current_balance = bank.current_balance + amount
+        # Update recipient's bank balance
+        bank, _ = NgoBank.objects.get_or_create(user=to_user)
+        bank.current_balance = (bank.current_balance or 0) + amount  # Ensure there's a default value
         bank.save()
 
-        notification = Notifications.objects.create(
+        # Create notifications for both parties
+        Notifications.objects.create(
             user=from_user,
             name="Amount Debited",
-            desc="Debited to "+str(to_user.first_name)+". Amount is Rs."+str(amount),
+            desc=f"Debited to {to_user.first_name}. Amount is Rs.{amount}",
         )
-        notification.save()
-
-        notification = Notifications.objects.create(
+        Notifications.objects.create(
             user=to_user,
             name="Amount Credited",
-            desc="Credited from "+str(from_user.first_name)+". Amount is Rs."+str(amount),
+            desc=f"Credited from {from_user.first_name}. Amount is Rs.{amount}",
         )
-        notification.save()
-
 
         return HttpResponseRedirect(reverse("donor_base"))
+
+
+
 
 
 

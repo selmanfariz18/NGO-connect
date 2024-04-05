@@ -105,14 +105,14 @@
                     <li class="text-left">NAME: {{ ngo.user.first_name }}</li>
                     <li class="text-left">ADDRESS: {{ ngo.address }}</li>
                     <li class="text-left">PINCODE: {{ ngo.pincode }}</li>
-                    <li>{{ngo.user.id}}</li>
+                    <!-- <li>{{ngo.user.id}}</li> -->
                 </ul>
                 <br>
                 <!-- Flex container for buttons -->
                 <div class="flex justify-around">     
                     <form method="post" action="/donor/donate_btn_request">
                         {% csrf_token %}
-                        <input type="hidden" name="id" value="{{ ngo }}">
+                        <input type="hidden" name="id" value="{{ ngo.id }}">
                         <!-- <input type="hidden" name="user" value="{{ ngo }}">   -->
                         <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
                     </form>

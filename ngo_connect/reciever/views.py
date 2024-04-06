@@ -114,3 +114,11 @@ def reciever_ngo(request):
         rec.save()
 
         return HttpResponseRedirect(reverse("receiver_base"))
+    
+def dlt_notification(request):
+    """for deleting single notifications."""
+    if request.method == 'POST':
+        id = request.POST['id']
+        notification = get_object_or_404(Notifications, id=id)
+        notification.delete()
+        return HttpResponseRedirect(reverse("receiver_base"))

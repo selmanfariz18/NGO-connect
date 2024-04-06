@@ -50,7 +50,7 @@
       <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
         <nav>
           <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
-            <li class="hover:bg-violet-600">
+            <li>
               <a class="md:p-4 py-3 px-0 block">Balance: ₹{{reciever_balance.current_balance}}</a>
             </li>
             <li class="relative">
@@ -64,25 +64,33 @@
               <div class="absolute right-0 mt-2 w-56 bg-white shadow-xl hidden" id="notificationDropdown">
                 <!-- Horizontal Card 1 -->
                 {% for i in notifications %}
-                <div class="p-4 border-b border-gray-200 flex justify-between items-start">
-                  <div>
-                    <h6 class="text-sm font-semibold text-gray-700">{{ i.name }}</h6>
-                    <p class="text-xs text-gray-600">{{ i.desc }}</p>
+                <div class="flex justify-between items-start p-4 border-b border-gray-200">
+                  <div class="flex-grow">
+                    <form action="">
+                      <h6 class="text-sm font-semibold text-gray-700">{{ i.name }}</h6>
+                      <p class="text-xs text-gray-600">{{ i.desc }}</p>
+                    </form>
                   </div>
-                  <button class="text-gray-400 hover:text-gray-500">
-                    <i class="fas fa-trash"></i>
-                  </button>
+                  <div>
+                    <form method="post" action="/reciever/dlt_notification">
+                      {% csrf_token %}
+                      <input type="hidden" name="id" value="{{ i.id }}">
+                      <button class="text-gray-400 hover:text-gray-500" type="submit">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </form>
+                  </div>
                 </div>
                 {% endfor %}
                 <!-- Horizontal Card 2 --> 
               </div>
             </li>
-            <li class="hover:bg-violet-600">
+            <li>
               <a class="md:p-4 py-3 px-0 block" href="#">Contributers</a>
             </li>
-            <li><a class="md:p-4 py-3 px-0 block" href="#">Settings</a></li>
+            <li><a class="md:p-4 py-3 px-0 block" href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
             <li>
-              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="/logout">Logout</a>
+              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
             </li>
           </ul>
         </nav>

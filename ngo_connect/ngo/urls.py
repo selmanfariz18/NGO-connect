@@ -9,4 +9,5 @@ urlpatterns = [
     path('accept_request/', views.accept_request, name="accept_request"),
     path('reject_request/', views.reject_request, name="reject_request"),
     path('balance_sett', views.balance_sett, name="balance_sett"),
+    path('dlt_notification', views.dlt_notification, name="dlt_notification"),
 ]

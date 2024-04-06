@@ -169,3 +169,12 @@ def ngo_donor_users(request):
     }
 
     return render(request, 'ngo_donors.html', context)
+
+
+def dlt_notification(request):
+    """for deleting single notifications."""
+    if request.method == 'POST':
+        id = request.POST['id']
+        notification = get_object_or_404(Notifications, id=id)
+        notification.delete()
+        return HttpResponseRedirect(reverse("ngo_base"))

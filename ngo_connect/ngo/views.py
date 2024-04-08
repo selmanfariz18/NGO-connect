@@ -178,3 +178,24 @@ def dlt_notification(request):
         notification = get_object_or_404(Notifications, id=id)
         notification.delete()
         return HttpResponseRedirect(reverse("ngo_base"))
+    
+
+def ngo_profile_page(request):
+    profile = request.user
+    try:
+        ngouser = ngousers.objects.get(user=request.user)
+    except ngousers.DoesNotExist:
+        ngouser = ngousers(user=request.user)
+    try:
+        bank = NgoBank.objects.get(user=request.user)
+    except NgoBank.DoesNotExist:
+        bank = NgoBank(user=request.user)
+
+
+    context = {
+        'user' : profile,
+        'ngouser' : ngouser,
+        'bank' : bank,
+    }
+
+    return render(request, 'ngo_profile_page.html', context)

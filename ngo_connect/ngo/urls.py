@@ -10,4 +10,5 @@ urlpatterns = [
     path('reject_request/', views.reject_request, name="reject_request"),
     path('balance_sett', views.balance_sett, name="balance_sett"),
     path('dlt_notification', views.dlt_notification, name="dlt_notification"),
+    path('ngo_profile_page', views.ngo_profile_page, name="ngo_profile_page"),
 ]

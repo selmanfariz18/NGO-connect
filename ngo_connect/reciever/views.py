@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from base.models import ngousers, Notifications
 from django.contrib.auth.models import User
-from reciever.models import ReceiverMoreDetails
+from reciever.models import ReceiverMoreDetails, ReceiverMoreDetails
 from django.http import Http404
 from ngo.models import Reciever_under_ngo
 from reciever.models import RecieverBank
@@ -122,3 +122,28 @@ def dlt_notification(request):
         notification = get_object_or_404(Notifications, id=id)
         notification.delete()
         return HttpResponseRedirect(reverse("receiver_base"))
+    
+def reciever_profile_page(request):
+    profile = request.user
+    try:
+        ngouser = ngousers.objects.get(user=request.user)
+    except ngousers.DoesNotExist:
+        ngouser = ngousers(user=request.user)
+    try:
+        bank = RecieverBank.objects.get(user=request.user)
+    except RecieverBank.DoesNotExist:
+        bank = RecieverBank(user=request.user)
+    try:
+        reciever_type = ReceiverMoreDetails.objects.get(user=request.user)
+    except ReceiverMoreDetails.DoesNotExist:
+        reciever_type = ReceiverMoreDetails(user=request.user)
+
+
+    context = {
+        'user' : profile,
+        'ngouser' : ngouser,
+        'reciever_type' : reciever_type,
+        'bank' : bank,
+    }
+
+    return render(request, 'reciever_profile_page.html', context)

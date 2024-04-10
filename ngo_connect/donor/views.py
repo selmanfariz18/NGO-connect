@@ -112,6 +112,25 @@ def dlt_notification(request):
         notification.delete()
         return HttpResponseRedirect(reverse("donor_base"))
 
+def donor_profile_page(request):
+    profile = request.user
+    try:
+        ngouser = ngousers.objects.get(user=request.user)
+    except ngousers.DoesNotExist:
+        ngouser = ngousers(user=request.user)
+    # try:
+    #     bank = NgoBank.objects.get(user=request.user)
+    # except NgoBank.DoesNotExist:
+    #     bank = NgoBank(user=request.user)
+
+
+    context = {
+        'user' : profile,
+        'ngouser' : ngouser,
+        # 'bank' : bank,
+    }
+
+    return render(request, 'donor_profile_page.html', context)
 
 
         

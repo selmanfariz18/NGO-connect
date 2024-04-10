@@ -6,4 +6,5 @@ urlpatterns = [
     path('donate_btn_request', views.donate_btn_request, name="donate_btn_request"),
     path('donation', views.donation, name="donation"),
     path('dlt_notification', views.dlt_notification, name="dlt_notification"),
+    path('donor_profile_page', views.donor_profile_page, name="donor_profile_page"),
 ]

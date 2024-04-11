@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -78,11 +79,18 @@ def donation(request):
         unique_id = base64.urlsafe_b64encode(uuid.uuid4().bytes).rstrip(b'=').decode('ascii')
         transaction_id = unique_id[:10]
 
-        # Handling the transaction
-        transaction, _ = NgoBankTransactions.objects.get_or_create(from_user=from_user, to_user=to_user)
-        transaction.amount = amount
-        transaction.transaction_id = transaction_id
-        transaction.save()
+        try:
+            # Directly create a new transaction
+            NgoBankTransactions.objects.create(
+                from_user=from_user,
+                to_user=to_user,
+                amount=amount,
+                transaction_id=transaction_id,
+                transaction_type='credited',
+            )
+        except IntegrityError:
+            # Handle the case where the transaction_id is not unique, which should be rare
+            pass
 
         # Update recipient's bank balance
         bank, _ = NgoBank.objects.get_or_create(user=to_user)
@@ -102,7 +110,6 @@ def donation(request):
         )
 
         return HttpResponseRedirect(reverse("donor_base"))
-
 
 def dlt_notification(request):
     """for deleting single notifications."""

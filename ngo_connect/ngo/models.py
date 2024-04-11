@@ -12,6 +12,7 @@ class NgoBankTransactions(models.Model):
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received', null=True)
     amount = models.IntegerField(null=True)
     transaction_id = models.CharField(max_length=10, null=True)
+    transaction_type = models.CharField(max_length=8, choices=(('credited', 'credited'), ('debited', 'debited')), null=True)
 
 
 class Reciever_under_ngo(models.Model):

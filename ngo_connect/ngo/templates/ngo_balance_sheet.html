@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.username}}|NGO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+</head>
+<body>
+
+    <header
+    class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md"
+>
+    <div class="flex-1 flex justify-between items-center">
+      <a href="#" class="text-xl">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
+    </div>
+
+    <label for="menu-toggle" class="pointer-cursor lg:hidden block">
+        <svg
+            class="fill-current text-gray-900"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+        >
+            <title>menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+        </svg>
+    </label>
+    <input class="hidden" type="checkbox" id="menu-toggle"/>
+
+    <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+        <nav>
+            <ul class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0">
+                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li>
+                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_donor_users">Contributers</a></li>
+                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_profile_page"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                <li><a class="lg:p-4 py-3 rounded-md bg-orange-200 px-0 mx-1 block hover:bg-red-500" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="m-1 flex justify-center items-center" id="balance">
+    <div class="flex justify-center items-center text-center h-full w-full my-4 py-4 bg-slate-500 rounded-xl" style="height: 50vh; width: 80vh;">
+        <h1 class="text-5xl">Balance: ₹{{bank.current_balance}}</h1>
+    </div>
+</section>
+
+<section id="transactions" class="m-4 px-4">
+
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Transaction Id
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        From
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        To
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Transaction Type
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Amount
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Done At
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in transactions %}
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ i.transaction_id }}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ i.from_user }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ i.to_user }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ i.transaction_type }}
+                    </td>
+                    <td class="px-6 py-4">
+                        ₹{{ i.amount }}
+                    </td>    
+                    <td class="px-6 py-4">
+                        {{ i.done_at }}
+                    </td>               
+                </tr>  
+                {% endfor %}            
+            </tbody>
+        </table>
+    </div>
+    
+</section>
+    
+</body>
+</html>

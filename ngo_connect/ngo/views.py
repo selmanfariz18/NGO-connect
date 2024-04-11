@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,7 @@ from base.models import ngousers
 from django.contrib.auth.models import User
 from base.models import ngousers, Notifications
 from reciever.models import ReceiverMoreDetails
-from ngo.models import Reciever_under_ngo, NgoBank
+from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank
 
 
 # Create your views here.
@@ -199,3 +200,23 @@ def ngo_profile_page(request):
     }
 
     return render(request, 'ngo_profile_page.html', context)
+
+def ngo_balance_sheet(request):
+    profile=request.user
+
+    try:
+        bank = NgoBank.objects.get(user=request.user)
+    except NgoBank.DoesNotExist:
+        bank = NgoBank(user=request.user)
+
+    transactions = NgoBankTransactions.objects.filter(
+        Q(from_user=request.user) | Q(to_user=request.user)
+    ).order_by('-done_at')
+
+    context = {
+        'user': profile,
+        'bank': bank,
+        'transactions': transactions,
+    }
+
+    return render(request, 'ngo_balance_sheet.html', context)

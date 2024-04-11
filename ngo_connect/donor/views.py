@@ -38,10 +38,13 @@ def donor_base(request):
     notifications = Notifications.objects.filter(user=request.user)
     notification_count = notifications.count()
 
+    transactions = NgoBankTransactions.objects.filter(from_user=request.user).order_by('-done_at')
+
     context = {
         'ngos_with_balance': ngos_with_balance,
         'notifications': notifications,
         'notification_count': notification_count,
+        'transactions' : transactions,
     }
 
     return render(request, 'donor_base.html', context)

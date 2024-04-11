@@ -154,7 +154,14 @@
               <li class="text-left">ADDRESS: {{ detail.address }}</li>
               <li class="text-left">PINCODE: {{ detail.pincode }}</li>
             </ul>
-          </div>
+            <div class="flex justify-around">     
+              <!-- <form method="post" action="/donor/donate_btn_request">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ item.ngo.id }}"> -->
+                  <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
+              <!-- </form> -->
+            </div>
+          </div>       
           {% endif %}
           {% endfor %}
           {% endif %}

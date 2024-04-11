@@ -97,11 +97,11 @@
       </div>
     </header>
 
-    {% if reciever.is_reciever_type_defined == True %}
+    <!-- {% if reciever.is_reciever_type_defined == True %}
     <div class="px-5">
       <h2>Hai {% if reciever.reciver_type == 'OAH' %} Old age home {% else %} {{ reciever.reciever_type }} {% endif %}</h2>
     </div>
-    {% endif %}
+    {% endif %} -->
 
     {% if reciever.is_reciever_type_defined == False %}
     <section id="reciver_type" class="flex justify-center items-center">
@@ -164,7 +164,8 @@
         <h2>request in pending</h2>
       </div>
       {% elif ngo.status == 'accepted' %}
-      <div class="container text-center my-3 mx-auto">
+      <div class="container text-center mx-auto my-4 py-4 bg-slate-500 rounded-xl" style="height: 20vh; width: 80vh;">
+        <p class="text-xl">Hai {{ user.first_name }}, {% if reciever.reciver_type == OAH %} Old age home {% else %} {{ reciever.reciever_type }} {% endif %}</p>
         <h2>You are now under {{ ngo.user.first_name }} NGO</h2>
       </div>
       {% endif %}

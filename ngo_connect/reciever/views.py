@@ -9,7 +9,7 @@ from base.models import ngousers, Notifications
 from django.contrib.auth.models import User
 from reciever.models import ReceiverMoreDetails, ReceiverMoreDetails
 from django.http import Http404
-from ngo.models import Reciever_under_ngo
+from ngo.models import NgoBankTransactions, Reciever_under_ngo
 from reciever.models import RecieverBank
 
 
@@ -42,6 +42,7 @@ def receiver_base(request):
 
     notifications = Notifications.objects.filter(user=request.user)
     notification_count = notifications.count()
+    transactions = NgoBankTransactions.objects.filter(to_user=request.user).order_by('-done_at')
 
     context = {
         'users' : users,
@@ -50,6 +51,7 @@ def receiver_base(request):
         'reciever_balance' : reciever_balance,
         'notifications' : notifications,
         'notification_count' : notification_count,
+        'transactions' : transactions,
     }
 
     # for user in users:

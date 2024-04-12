@@ -1,5 +1,5 @@
 from django.db import IntegrityError
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.urls import reverse
@@ -57,7 +57,7 @@ def ngo_base(request):
         bank = NgoBank(user=request.user)
 
 
-    notifications = Notifications.objects.filter(user=request.user)
+    notifications = Notifications.objects.filter(user=request.user).order_by('-id')
     notification_count = notifications.count()
 
     balance = ngousers.objects.get(user=request.user)
@@ -260,38 +260,51 @@ def ngo_donation(request):
         unique_id = base64.urlsafe_b64encode(uuid.uuid4().bytes).rstrip(b'=').decode('ascii')
         transaction_id = unique_id[:10]
 
-        try:
-            # Directly create a new transaction
-            NgoBankTransactions.objects.create(
-                from_user=from_user,
-                to_user=to_user,
-                amount=amount,
-                transaction_id=transaction_id,
-                transaction_type='debited',
-            )
-        except IntegrityError:
-            # Handle the case where the transaction_id is not unique, which should be rare
-            pass
+
 
         # Update recipient's bank balance
         bank, _ = NgoBank.objects.get_or_create(user=from_user)
-        bank.current_balance = (bank.current_balance or 0) - amount  # Ensure there's a default value
-        bank.save()
+        if (bank.current_balance-amount) >= 0:
+            bank.current_balance = (bank.current_balance or 0) - amount  
+            bank.save()
 
-        bank1, _ = RecieverBank.objects.get_or_create(user=to_user)
-        bank1.current_balance = (bank1.current_balance or 0) + amount  # Ensure there's a default value
-        bank1.save()
+            bank1, _ = RecieverBank.objects.get_or_create(user=to_user)
+            bank1.current_balance = (bank1.current_balance or 0) + amount  
+            bank1.save()
 
-        # Create notifications for both parties
-        Notifications.objects.create(
-            user=from_user,
-            name="Amount Debited",
-            desc=f"Debited to {to_user.first_name}. Amount is Rs.{amount}",
-        )
-        Notifications.objects.create(
-            user=to_user,
-            name="Amount Credited",
-            desc=f"Credited from {from_user.first_name}. Amount is Rs.{amount}",
-        )
+            try:
+                # Directly create a new transaction
+                NgoBankTransactions.objects.create(
+                    from_user=from_user,
+                    to_user=to_user,
+                    amount=amount,
+                    transaction_id=transaction_id,
+                    transaction_type='debited',
+                )
+            except IntegrityError:
+                # Handle the case where the transaction_id is not unique, which should be rare
+                pass
+
+            # Create notifications for both parties
+            Notifications.objects.create(
+                user=from_user,
+                name="Amount Debited",
+                desc=f"Debited to {to_user.first_name}. Amount is Rs.{amount}",
+            )
+            Notifications.objects.create(
+                user=to_user,
+                name="Amount Credited",
+                desc=f"Credited from {from_user.first_name}. Amount is Rs.{amount}",
+            )
+            messages.success(request, "Payment success")
+        else:
+            messages.error(request, "Insufficient balance")
+            Notifications.objects.create(
+                user=from_user,
+                name="Insufficient balance",
+                desc="Last transaction cancelled due to insufficient balance.",
+            )
+            return redirect("ngo_base")
+            
 
         return HttpResponseRedirect(reverse("ngo_base"))

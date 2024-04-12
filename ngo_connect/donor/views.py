@@ -35,7 +35,7 @@ def donor_base(request):
             'bank_balance': ngo_bank_balance,
         })
 
-    notifications = Notifications.objects.filter(user=request.user)
+    notifications = Notifications.objects.filter(user=request.user).order_by('-id')
     notification_count = notifications.count()
 
     transactions = NgoBankTransactions.objects.filter(from_user=request.user).order_by('-done_at')

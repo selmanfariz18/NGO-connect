@@ -40,7 +40,7 @@ def receiver_base(request):
         # reciever_balance.current_balance = bank_balance
         # reciever_balance.save()
 
-    notifications = Notifications.objects.filter(user=request.user)
+    notifications = Notifications.objects.filter(user=request.user).order_by('-id')
     notification_count = notifications.count()
     transactions = NgoBankTransactions.objects.filter(to_user=request.user).order_by('-done_at')
 

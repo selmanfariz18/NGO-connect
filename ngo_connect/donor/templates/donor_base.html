@@ -63,7 +63,7 @@
             <!-- Dropdown Menu -->
             <div class="absolute right-0 mt-2 w-56 bg-white shadow-xl hidden" id="notificationDropdown">
               {% for i in notifications %}
-              <div class="flex justify-between items-start p-4 border-b border-gray-200">
+              <div class="flex justify-between items-start p-4 border-b border-gray-200 z-40">
                 <div class="flex-grow">
                   <form action="">
                     <h6 class="text-sm font-semibold text-gray-700">{{ i.name }}</h6>
@@ -112,7 +112,7 @@
                     <li class="text-left">ADDRESS: {{ item.ngo.address }}</li>
                     <li class="text-left">PINCODE: {{ item.ngo.pincode }}</li>
                     <!-- Displaying bank balance -->
-                    <li class="text-left">BANK BALANCE: ₹{{ item.bank_balance|default:"Balance not available" }}</li>
+                    <li class="text-left">BANK BALANCE: ₹{{ item.bank_balance|default:"0" }}</li>
                 </ul>
                 <br>
                 <!-- Flex container for buttons -->
@@ -134,7 +134,7 @@
 
   {% if transactions %}
   <h1 class="text-center mt-6 text-4xl">Transactions</h1>
-  <section id="transactions" class="m-4 px-4 flex justify-center items-center">
+  <section id="transactions" class="m-4 px-4 flex justify-center items-center z-0">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

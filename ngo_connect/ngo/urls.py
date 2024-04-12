@@ -12,4 +12,6 @@ urlpatterns = [
     path('dlt_notification', views.dlt_notification, name="dlt_notification"),
     path('ngo_profile_page', views.ngo_profile_page, name="ngo_profile_page"),
     path('ngo_balance_sheet', views.ngo_balance_sheet, name="ngo_balance_sheet"),
+    path('ngo_donate_btn_request', views.ngo_donate_btn_request, name="ngo_donate_btn_request"),
+    path('ngo_donation', views.ngo_donation, name="ngo_donation"),
 ]

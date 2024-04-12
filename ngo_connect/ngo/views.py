@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
@@ -8,8 +9,12 @@ from django.contrib import messages
 from base.models import ngousers
 from django.contrib.auth.models import User
 from base.models import ngousers, Notifications
-from reciever.models import ReceiverMoreDetails
+from reciever.models import ReceiverMoreDetails, RecieverBank
 from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank
+
+import base64
+import uuid
+
 
 
 # Create your views here.
@@ -23,6 +28,7 @@ def ngo_base(request):
     user_details = ngousers.objects.all()
     reciever = ReceiverMoreDetails.objects.all()
     reciever_ngo = Reciever_under_ngo.objects.all()
+    reciever_bank = RecieverBank.objects.all()
     count = 1
     ngo_request_count = Reciever_under_ngo.objects.filter(user=request.user, status='pending')
     ngo_request_oah_count = Reciever_under_ngo.objects.filter(
@@ -50,6 +56,7 @@ def ngo_base(request):
     except NgoBank.DoesNotExist:
         bank = NgoBank(user=request.user)
 
+
     notifications = Notifications.objects.filter(user=request.user)
     notification_count = notifications.count()
 
@@ -72,9 +79,11 @@ def ngo_base(request):
         'notifications' : notifications,
         'notification_count' : notification_count,
         'balance' : balance,
+        'reciever_bank' : reciever_bank,
     }
 
     return render(request, 'ngo_base.html', context)
+
 
 
 def ngo_all_users(request):
@@ -220,3 +229,69 @@ def ngo_balance_sheet(request):
     }
 
     return render(request, 'ngo_balance_sheet.html', context)
+
+def ngo_donate_btn_request(request):
+    if request.method == 'POST':
+        id = request.POST['id']
+        # user = request.POST['user']
+        # req = get_object_or_404(User, id=id)
+
+        ngo_user = get_object_or_404(ngousers, id=id).user
+
+        context = {
+            'from_user' : request.user.email,
+            'to_user' : ngo_user.email,
+        }
+
+        # print(user)
+        return render(request, 'ngo_donation.html', context)
+    
+def ngo_donation(request):
+    if request.method == 'POST':
+        amount = int(request.POST['amount'])  # Convert amount to integer
+        from_user_email = request.POST['from_user']
+        to_user_email = request.POST['to_user']
+
+        # Get User objects for both donor and recipient
+        from_user = get_object_or_404(User, email=from_user_email)
+        to_user = get_object_or_404(User, email=to_user_email)
+
+        # Generate a unique transaction ID
+        unique_id = base64.urlsafe_b64encode(uuid.uuid4().bytes).rstrip(b'=').decode('ascii')
+        transaction_id = unique_id[:10]
+
+        try:
+            # Directly create a new transaction
+            NgoBankTransactions.objects.create(
+                from_user=from_user,
+                to_user=to_user,
+                amount=amount,
+                transaction_id=transaction_id,
+                transaction_type='debited',
+            )
+        except IntegrityError:
+            # Handle the case where the transaction_id is not unique, which should be rare
+            pass
+
+        # Update recipient's bank balance
+        bank, _ = NgoBank.objects.get_or_create(user=from_user)
+        bank.current_balance = (bank.current_balance or 0) - amount  # Ensure there's a default value
+        bank.save()
+
+        bank1, _ = RecieverBank.objects.get_or_create(user=to_user)
+        bank1.current_balance = (bank1.current_balance or 0) + amount  # Ensure there's a default value
+        bank1.save()
+
+        # Create notifications for both parties
+        Notifications.objects.create(
+            user=from_user,
+            name="Amount Debited",
+            desc=f"Debited to {to_user.first_name}. Amount is Rs.{amount}",
+        )
+        Notifications.objects.create(
+            user=to_user,
+            name="Amount Credited",
+            desc=f"Credited from {from_user.first_name}. Amount is Rs.{amount}",
+        )
+
+        return HttpResponseRedirect(reverse("ngo_base"))

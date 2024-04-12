@@ -153,13 +153,19 @@
               <li class="text-left">Status: {{ i.status }} </li>
               <li class="text-left">ADDRESS: {{ detail.address }}</li>
               <li class="text-left">PINCODE: {{ detail.pincode }}</li>
+              {% for bal in reciever_bank %}
+              {% if bal.user == detail.user %}
+                <li class="text-left">AMOUNT: ₹{{ bal.current_balance }}</li>
+              {% endif %}
+              {% endfor %}
             </ul>
             <div class="flex justify-around">     
-              <!-- <form method="post" action="/donor/donate_btn_request">
+              <form method="post" action="/ngo/ngo_donate_btn_request">
                   {% csrf_token %}
-                  <input type="hidden" name="id" value="{{ item.ngo.id }}"> -->
+                  <input type="hidden" name="id" value="{{ detail.id }}">
+                  <!-- <p>{{ item.ngo.user }}</p> -->
                   <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
-              <!-- </form> -->
+              </form>
             </div>
           </div>       
           {% endif %}
@@ -192,7 +198,20 @@
               <li class="text-left">Status: {{ i.status }} </li>
               <li class="text-left">ADDRESS: {{ detail.address }}</li>
               <li class="text-left">PINCODE: {{ detail.pincode }}</li>
+              {% for bal in reciever_bank %}
+              {% if bal.user == detail.user %}
+                <li class="text-left">AMOUNT: ₹{{ bal.current_balance }}</li>
+              {% endif %}
+              {% endfor %}
             </ul>
+            <div class="flex justify-around">     
+              <form method="post" action="/ngo/ngo_donate_btn_request">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ detail.id }}">
+                  <!-- <p>{{ item.ngo.user }}</p> -->
+                  <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
+              </form>
+            </div>
           </div>
           {% endif %}
           {% endfor %}
@@ -224,7 +243,20 @@
             <li class="text-left">Status: {{ i.status }} </li>
             <li class="text-left">ADDRESS: {{ detail.address }}</li>
             <li class="text-left">PINCODE: {{ detail.pincode }}</li>
+            {% for bal in reciever_bank %}
+            {% if bal.user == detail.user %}
+              <li class="text-left">AMOUNT: ₹{{ bal.current_balance }}</li>
+            {% endif %}
+            {% endfor %}
           </ul>
+          <div class="flex justify-around">     
+            <form method="post" action="/ngo/ngo_donate_btn_request">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ detail.id }}">
+                <!-- <p>{{ item.ngo.user }}</p> -->
+                <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
+            </form>
+          </div>
         </div>
         {% endif %}
         {% endfor %}

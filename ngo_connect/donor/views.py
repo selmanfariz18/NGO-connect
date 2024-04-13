@@ -111,6 +111,7 @@ def donation(request):
             name="Amount Credited",
             desc=f"Credited from {from_user.first_name}. Amount is Rs.{amount}",
         )
+        messages.success(request, "Payment success")
 
         return HttpResponseRedirect(reverse("donor_base"))
 

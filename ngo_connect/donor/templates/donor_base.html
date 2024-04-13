@@ -6,6 +6,10 @@
     <title>{{user.username}}|NGO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
 
     <style>
            .notification-icon {
@@ -23,6 +27,47 @@
           padding: 2px 6px;
           font-size: 10px;
           height: 25px;
+      }
+      .alert {
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 5px;
+        width: 400px;
+        height: 35px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 16px;
+        font-weight: 300;
+        padding: 10px;
+      }
+      .alert-good {
+        color: white;
+      }
+      .good-i {
+        color: green;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+      .error-i {
+        color: red;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+      .info-i {
+        color: orangered;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+      .bi {
+        vertical-align: 0.125em;
+        width: 1em;
+        height: 1em;
       }
     </style>
   </head>
@@ -63,7 +108,7 @@
             <!-- Dropdown Menu -->
             <div class="absolute right-0 mt-2 w-56 bg-white shadow-xl hidden" id="notificationDropdown">
               {% for i in notifications %}
-              <div class="flex justify-between items-start p-4 border-b border-gray-200 z-40">
+              <div class="flex justify-between items-start p-4 border-b border-gray-200 z-100">
                 <div class="flex-grow">
                   <form action="">
                     <h6 class="text-sm font-semibold text-gray-700">{{ i.name }}</h6>
@@ -95,6 +140,29 @@
       </div>
     </header>
 
+          <!--Alert area-->
+          <div class="form-group row mt-6">
+            {% for message in messages %} {% if message.tags == 'success' %}
+            <div class="alert alert-good h-14" role="alert">
+              <i class="bi bi-check-circle good-i"></i>
+              {{message}}
+            </div>
+            {% elif message.tags == 'error' %}
+            <div class="alert alert-good h-14" role="alert">
+              <i class="bi bi-hexagon-fill error-i"></i>
+              {{message}}
+            </div>
+            {% elif message.tags == 'info' %}
+            <div class="alert alert-good h-14" role="alert">
+              <i class="bi bi-exclamation-triangle info-i"></i>
+              {{message}}
+            </div>
+            {% else %}
+            <div class="alert h-14" role="alert">{{message}}</div>
+            {% endif %} {% endfor %}
+          
+          </div>
+          <!--Alert area ends-->
 
     <section>
       <h1 class="text-center text-4xl mt-5">All NGO's</h1>
@@ -134,7 +202,7 @@
 
   {% if transactions %}
   <h1 class="text-center mt-6 text-4xl">Transactions</h1>
-  <section id="transactions" class="m-4 px-4 flex justify-center items-center z-0">
+  <section id="transactions" class="m-4 px-4 flex justify-center items-center -z-10">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

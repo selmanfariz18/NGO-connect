@@ -1,5 +1,5 @@
 from datetime import timezone
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -152,4 +152,27 @@ def reciever_profile_page(request):
 
 
 def make_rec_request(request):
-    return render(request, 'make_rec_request.html')
+    if request.method == 'POST':
+        # Retrieve form data using .get() with defaults to handle missing fields
+        payment_type = request.POST.get('payment_type', None)
+        amount = request.POST.get('amount', None)
+        goods_name = request.POST.get('goods_name', None)
+        count = request.POST.get('count', None)
+
+        # Check what type of payment it is and process accordingly
+        if payment_type == 'money':
+            print('Payment Type:', payment_type, 'Amount:', amount)
+        elif payment_type == 'other':
+            print('Payment Type:', payment_type, 'Goods Name:', goods_name, 'Count:', count)
+
+        return redirect("receiver_base")
+
+    try:
+        ngo = Reciever_under_ngo.objects.get(reciever=request.user)
+    except Reciever_under_ngo.DoesNotExist:
+        ngo = Reciever_under_ngo(reciever=request.user)
+
+    context = {
+        'ngo': ngo,
+    }
+    return render(request, 'make_rec_request.html', context)

@@ -30,3 +30,13 @@ class RecieverBankLog(models.Model):
     to_user = models.CharField(max_length=20, blank=True)
     date = models.DateField(auto_now=True)
     time = models.TimeField(auto_now=True)
+
+class RecieverRequests(models.Model):
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_request', null=True)
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_request', null=True)
+    is_money_needed = models.BooleanField(default=True)
+    amount = models.IntegerField(null=True)
+    thing_name = models.CharField(max_length=20, blank=True)
+    ting_quantity = models.IntegerField(null=True)
+    status = models.CharField(max_length=10, choices=(('accepted', 'accepted'), ('rejected', 'rejected'), ('pending', 'pending'),), null=True)
+

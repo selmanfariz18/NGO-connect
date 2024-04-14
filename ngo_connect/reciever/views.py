@@ -149,3 +149,7 @@ def reciever_profile_page(request):
     }
 
     return render(request, 'reciever_profile_page.html', context)
+
+
+def make_rec_request(request):
+    return render(request, 'make_rec_request.html')

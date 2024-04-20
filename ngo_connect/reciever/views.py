@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from base.models import ngousers, Notifications
 from django.contrib.auth.models import User
-from reciever.models import ReceiverMoreDetails, ReceiverMoreDetails
+from reciever.models import ReceiverMoreDetails, ReceiverMoreDetails, RecieverRequests
 from django.http import Http404
 from ngo.models import NgoBankTransactions, Reciever_under_ngo
 from reciever.models import RecieverBank
@@ -159,9 +159,31 @@ def make_rec_request(request):
         goods_name = request.POST.get('goods_name', None)
         count = request.POST.get('count', None)
 
+        try:
+            ngo = Reciever_under_ngo.objects.get(reciever=request.user)
+        except Reciever_under_ngo.DoesNotExist:
+            ngo = Reciever_under_ngo(reciever=request.user)
+
+        to_user = ngo.user
+        from_user = request.user
+        # print(to_user, request.user)
+        
+
         # Check what type of payment it is and process accordingly
         if payment_type == 'money':
-            print('Payment Type:', payment_type, 'Amount:', amount)
+            try:
+                RecieverRequests.objects.create(
+                    from_user = from_user,
+                    to_user = to_user,
+                    is_money_needed = True,
+                    amount = amount,
+                    status = 'pending',
+                )
+                success_msg = "Request sent successfully to " + str(to_user.first_name)
+                messages.success(request, success_msg)
+            except:
+                messages.error(request, "Error in request sending!")
+            # print('Payment Type:', payment_type, 'Amount:', amount)
         elif payment_type == 'other':
             print('Payment Type:', payment_type, 'Goods Name:', goods_name, 'Count:', count)
 

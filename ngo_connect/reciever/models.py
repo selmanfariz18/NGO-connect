@@ -37,6 +37,6 @@ class RecieverRequests(models.Model):
     is_money_needed = models.BooleanField(default=True)
     amount = models.IntegerField(null=True)
     thing_name = models.CharField(max_length=20, blank=True)
-    ting_quantity = models.IntegerField(null=True)
+    thing_quantity = models.IntegerField(null=True)
     status = models.CharField(max_length=10, choices=(('accepted', 'accepted'), ('rejected', 'rejected'), ('pending', 'pending'),), null=True)
 

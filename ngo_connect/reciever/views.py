@@ -185,6 +185,19 @@ def make_rec_request(request):
                 messages.error(request, "Error in request sending!")
             # print('Payment Type:', payment_type, 'Amount:', amount)
         elif payment_type == 'other':
+            try:
+                RecieverRequests.objects.create(
+                    from_user = from_user,
+                    to_user = to_user,
+                    is_money_needed = False,
+                    goods_name = goods_name,
+                    count = count,
+                    status = 'pending',
+                )
+                success_msg = "Request sent successfully to " + str(to_user.first_name)
+                messages.success(request, success_msg)
+            except:
+                messages.error(request, "Error in request sending!")
             print('Payment Type:', payment_type, 'Goods Name:', goods_name, 'Count:', count)
 
         return redirect("receiver_base")

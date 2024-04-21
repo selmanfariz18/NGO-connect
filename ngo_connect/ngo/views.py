@@ -9,7 +9,7 @@ from django.contrib import messages
 from base.models import ngousers
 from django.contrib.auth.models import User
 from base.models import ngousers, Notifications
-from reciever.models import ReceiverMoreDetails, RecieverBank
+from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequests
 from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank
 
 import base64
@@ -63,6 +63,7 @@ def ngo_base(request):
     balance = ngousers.objects.get(user=request.user)
 
     # print(balance.is_balance_defined)
+    reciever_requests = RecieverRequests.objects.filter(to_user=request.user)
 
     context = {
         'me' : user_name,
@@ -80,6 +81,7 @@ def ngo_base(request):
         'notification_count' : notification_count,
         'balance' : balance,
         'reciever_bank' : reciever_bank,
+        'reciever_requests' : reciever_requests
     }
 
     return render(request, 'ngo_base.html', context)

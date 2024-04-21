@@ -200,6 +200,37 @@
 {% endif %}
 
 <section class="text-center my-6 mx-4">
+  <div class="items-center rounded-lg shadow-md p-3 my-3 justify-center align-middle">
+    {% for request in reciever_requests %}
+    <div class="bg-lime-100 rounded-lg shadow-md p-3 my-3 mx-auto w-3/4">
+      <ul class="mt-3">
+        <li class="text-left font-semibold">NAME: {{request.from_user.first_name}} </li>
+        {% if request.is_money_needed == True %}
+          <li class="text-left">AMOUNT: ₹{{ request.amount }}</li>
+        {% else %}
+          <li class="text-left">Goods Name: {{ request.goods_name }}</li>
+          <li class="text-left">Count: {{ request.count }}</li>
+        {% endif %}
+        <!-- <li class="text-left">Type:  </li>
+        <li class="text-left">Status: </li>
+        <li class="text-left">ADDRESS:{{request.from_user.address}} </li>
+        <li class="text-left">PINCODE: </li> -->
+      </ul>
+      <div class="flex justify-around">     
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ detail.id }}">
+            <!-- <p>{{ item.ngo.user }}</p> -->
+            <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
+        </form>
+      </div>
+    </div>  
+    {% endfor %}
+  </div>
+</section>
+
+
+<section class="text-center my-6 mx-4">
     <div class="flex flex-col lg:grid lg:grid-cols-3 gap-3 justify-around rounded-lg shadow-md p-3 my-3">
 
 

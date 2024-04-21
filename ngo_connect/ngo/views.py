@@ -310,3 +310,76 @@ def ngo_donation(request):
             
 
         return HttpResponseRedirect(reverse("ngo_base"))
+    
+
+def accept_donation_request(request):
+    if request.method == 'POST':
+        to_user = request.POST['to_user']
+        r_id = request.POST['id']
+
+        unique_id = base64.urlsafe_b64encode(uuid.uuid4().bytes).rstrip(b'=').decode('ascii')
+        transaction_id = unique_id[:10]
+
+        # bank, _ = NgoBank.objects.get_or_create(user=request.user)
+        rec = RecieverRequests.objects.get(id=r_id)
+
+        if request.POST['amount']:
+            amount = int(request.POST['amount'])
+            bank, _ = NgoBank.objects.get_or_create(user=request.user)
+            if (bank.current_balance-amount) >= 0:
+                rec = RecieverRequests.objects.get(id=r_id)
+                rec.status = 'accepted'
+                rec.save()
+
+                bank.current_balance = (bank.current_balance or 0) - amount  
+                bank.save()
+
+                # print(request.user, to_user)
+
+                to_user = get_object_or_404(User, email=to_user)
+
+                bank1, _ = RecieverBank.objects.get_or_create(user=to_user)
+                bank1.current_balance = (bank1.current_balance or 0) + amount  
+                bank1.save()
+
+                try:
+                    # Directly create a new transaction
+                    NgoBankTransactions.objects.create(
+                        from_user=request.user,
+                        to_user=to_user,
+                        amount=amount,
+                        transaction_id=transaction_id,
+                        transaction_type='debited',
+                    )
+                except IntegrityError:
+                    # Handle the case where the transaction_id is not unique, which should be rare
+                    pass
+                Notifications.objects.create(
+                    user=request.user,
+                    name="Amount Debited",
+                    desc=f"Debited to {to_user.first_name}. Amount is Rs.{amount}",
+                )
+                Notifications.objects.create(
+                    user=to_user,
+                    name="Amount Credited",
+                    desc=f"Credited from {request.user.first_name}. Amount is Rs.{amount}",
+                )
+                messages.success(request, "Requested Payment success")
+
+            else:
+                messages.error(request, "Insufficient balance to accept request")
+                Notifications.objects.create(
+                    user=request.user,
+                    name="Insufficient balance",
+                    desc="Last transaction cancelled due to insufficient balance.",
+                )
+
+        else :
+            goods_name = int(request.POST['goods_name'])
+            count = int(request.POST['count'])
+            messages.error(request, "Not ready to accept goods request")
+
+
+        # print(rec.status)
+
+    return redirect("ngo_base")

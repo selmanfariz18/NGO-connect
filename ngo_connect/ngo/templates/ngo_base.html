@@ -201,7 +201,9 @@
 
 <section class="text-center my-6 mx-4">
   <div class="items-center rounded-lg shadow-md p-3 my-3 justify-center align-middle">
+    <p class="text-2xl">Donation Requests</p>
     {% for request in reciever_requests %}
+    {% if request.status == 'pending' %}
     <div class="bg-lime-100 rounded-lg shadow-md p-3 my-3 mx-auto w-3/4">
       <ul class="mt-3">
         <li class="text-left font-semibold">NAME: {{request.from_user.first_name}} </li>
@@ -217,14 +219,35 @@
         <li class="text-left">PINCODE: </li> -->
       </ul>
       <div class="flex justify-around">     
-        <form method="post" action="">
+        <form method="post" action="/ngo/accept_donation_request">
             {% csrf_token %}
-            <input type="hidden" name="id" value="{{ detail.id }}">
+            <input type="hidden" name="to_user" value="{{ request.from_user }}">
+            <input type="hidden" name="id" value="{{ request.id }}">
+            {% if request.is_money_needed == True %}
+              <input type="hidden" name="amount" value="{{ request.amount }}">
+            {% else %}
+              <input type="hidden" name="goods_name" value="{{ request.goods_name }}">
+              <input type="hidden" name="count" value="{{ request.count }}">
+            {% endif %}
             <!-- <p>{{ item.ngo.user }}</p> -->
-            <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
+            <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Accept</button>
+        </form>
+        <form method="post" action="/ngo/accept_donation_request">
+          {% csrf_token %}
+          <input type="hidden" name="to_user" value="{{ request.from_user }}">
+          <input type="hidden" name="id" value="{{ request.id }}">
+          {% if request.is_money_needed == True %}
+            <input type="hidden" name="amount" value="{{ request.amount }}">
+          {% else %}
+            <input type="hidden" name="goods_name" value="{{ request.goods_name }}">
+            <input type="hidden" name="count" value="{{ request.count }}">
+          {% endif %}
+          <!-- <p>{{ item.ngo.user }}</p> -->
+          <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Accept</button>
         </form>
       </div>
     </div>  
+    {% endif %}
     {% endfor %}
   </div>
 </section>

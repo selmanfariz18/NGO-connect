@@ -71,12 +71,12 @@
       }
     </style>
   </head>
-  <body style="font-family: sans-serif">
+  <body style="font-family: sans-serif; background-color: #1C2C2A;">
     <header
-      class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md"
+      class="lg:px-16 px-4 flex flex-wrap items-center py-4 shadow-md" style="background-color: #1C2C2A;"
     >
       <div class="flex-1 flex justify-between items-center">
-        <a href="#" class="text-xl">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
+        <a href="#" class="text-xl text-white">NGO-Connect <p class="text-sm ">{{ user.first_name }}</p></a>
       </div>
 
       <label for="menu-toggle" class="pointer-cursor md:hidden block">
@@ -101,7 +101,7 @@
           <li class="relative">
             <a href="#" class="px-2" id="notificationButton">
               <div class="notification-icon">
-                  <i class="fas fa-bell fa-2x"></i> <!-- Replace with your preferred icon -->
+                  <i class="fas fa-bell fa-xl text-white"></i> <!-- Replace with your preferred icon -->
                   <span class="badge">{{ notification_count }}</span>
               </div>
             </a>
@@ -128,12 +128,12 @@
               {% endfor %}
             </div>
           </li>
-            <li>
+            <!-- <li>
               <a class="md:p-4 py-3 px-0 block" href="#">Contributers</a>
-            </li>
-            <li><a class="md:p-4 py-3 px-0 block" href="/donor/donor_profile_page"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+            </li> -->
+            <li><a class="md:p-4 py-3 px-0 block" href="/donor/donor_profile_page"><i class="fa fa-user text-white fa-xl" aria-hidden="true"></i></a></li>
             <li>
-              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="/logout"><i class="fa fa-sign-out fa-xl text-white" aria-hidden="true"></i></a>
             </li>
           </ul>
         </nav>
@@ -164,8 +164,8 @@
           </div>
           <!--Alert area ends-->
 
-    <section>
-      <h1 class="text-center text-4xl mt-5">All NGO's</h1>
+    <section class="text-center my-6 mx-4">
+      <h1 class="text-left mx-48 my-5 text-3xl mt-5 text-white">All NGO's</h1>
   
       <div class="text-center">
         {% if ngos_with_balance %}
@@ -173,7 +173,7 @@
         <div class="flex flex-wrap justify-center">
             {% for item in ngos_with_balance %}
             <!-- Each card -->
-            <div class="w-96 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
+            <div class="w-3/4 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
                 <ul class="mt-3">
                     <li class="text-left">EMAIL: {{ item.ngo.user.username }}</li>
                     <li class="text-left">NAME: {{ item.ngo.user.first_name }}</li>
@@ -184,12 +184,12 @@
                 </ul>
                 <br>
                 <!-- Flex container for buttons -->
-                <div class="flex justify-around">     
+                <div class="flex justify-end mr-10">     
                     <form method="post" action="/donor/donate_btn_request">
                         {% csrf_token %}
                         <input type="hidden" name="id" value="{{ item.ngo.id }}">
                         <!-- <p>{{ item.ngo.user }}</p> -->
-                        <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Donate</button>
+                        <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">Donate</button>
                     </form>
                 </div>
             </div>
@@ -201,33 +201,33 @@
 
 
   {% if transactions %}
-  <h1 class="text-center mt-6 text-4xl">Transactions</h1>
+  <h1 class="text-left mx-48 my-5 text-3xl mt-5 text-white">Transactions</h1>
   <section id="transactions" class="m-4 px-4 flex justify-center items-center -z-10">
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <div class="relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg w-4/5">
+        <table class="w-full text-sm text-left rtl:text-right text-black dark:text-black">
+            <thead class="text-xs text-black uppercase bg-white">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-base">
                         Transaction Id
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-base">
                         To
                     </th>
                     <!-- <th scope="col" class="px-6 py-3">
                         Transaction Type
                     </th> -->
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-base">
                         Amount
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-base">
                         Done At
                     </th>
                 </tr>
             </thead>
             <tbody>
                 {% for i in transactions %}
-                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr class="bg-white border-b dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
                         {{ i.transaction_id }}
                     </th>
                     <td class="px-6 py-4">

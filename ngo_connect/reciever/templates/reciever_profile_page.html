@@ -7,13 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
-<body>
+<body style="font-family: sans-serif; background-color: #1C2C2A;">
 
     <header
-    class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md"
+    class="lg:px-16 px-4 flex flex-wrap items-center py-4 shadow-md"
 >
     <div class="flex-1 flex justify-between items-center">
-      <a href="#" class="text-xl">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
+      <a href="#" class="text-xl text-white">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
     </div>
 
     <label for="menu-toggle" class="pointer-cursor lg:hidden block">
@@ -70,22 +70,22 @@
                 
               </div>
             </li> -->
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li>
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_donor_users">Contributers</a></li>
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_profile_page"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                <li><a class="lg:p-4 py-3 rounded-md bg-orange-200 px-0 mx-1 block hover:bg-red-500" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li> -->
+                <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_donor_users">Contributers</a></li> -->
+                <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_profile_page"><i class="fa fa-user" aria-hidden="true"></i></a></li> -->
+                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block fa-xl text-white" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
             </ul>
         </nav>
     </div>
 </header>
 
 <section id="profile">
-    <div class="container mx-auto my-5 p-5">
+    <div class="container mx-auto my-5 p-5 rounded-lg" style="background-color: #D9D9D9;">
         <div class="md:flex no-wrap md:-mx-2 ">
             <!-- Left Side -->
-            <div class="w-full md:w-3/12 md:mx-2">
+            <div class="w-full md:w-3/12 md:mx-2 ">
                 <!-- Profile Card -->
-                <div class="bg-white p-3 border-t-4 border-green-400">
+                <div class="bg-white p-3 shadow-gray-600">
                     <div class="image overflow-hidden">
                         <img class="h-auto w-full mx-auto"
                             src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
@@ -156,7 +156,7 @@
             <div class="w-full md:w-9/12 mx-2 h-64">
                 <!-- Profile tab -->
                 <!-- About Section -->
-                <div class="bg-white p-3 shadow-sm rounded-sm">
+                <div class="bg-white p-3 shadow-sm shadow-gray-600 rounded-lg">
                     <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                         <span clas="text-green-500">
                             <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -177,10 +177,10 @@
                                 <div class="px-4 py-2 font-semibold">User Type</div>
                                 <div class="px-4 py-2">{{ ngouser.user_type }}</div>
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Receiver Type</div>
-                                <div class="px-4 py-2">{{ reciever_type.reciever_type }}</div>
-                            </div>
+                            <!-- <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Gender</div>
+                                <div class="px-4 py-2">Female</div>
+                            </div> -->
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Contact No.</div>
                                 <div class="px-4 py-2">{{ ngouser.phone_number }}</div>

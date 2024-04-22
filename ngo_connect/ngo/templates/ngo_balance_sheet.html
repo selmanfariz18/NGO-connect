@@ -7,13 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
-<body>
+<body style="font-family: sans-serif; background-color: #1C2C2A;" >
 
     <header
-    class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md"
+    class="lg:px-16 px-4 flex flex-wrap items-center py-4 shadow-md"
 >
     <div class="flex-1 flex justify-between items-center">
-      <a href="#" class="text-xl">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
+      <a href="#" class="text-xl text-white">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
     </div>
 
     <label for="menu-toggle" class="pointer-cursor lg:hidden block">
@@ -33,17 +33,17 @@
     <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
         <nav>
             <ul class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0">
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li>
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_donor_users">Contributers</a></li>
-                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_profile_page"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                <li><a class="lg:p-4 py-3 rounded-md bg-orange-200 px-0 mx-1 block hover:bg-red-500" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li> -->
+                <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_donor_users">Contributers</a></li> -->
+                <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block text-white" href="/ngo/ngo_profile_page"><i class="fa fa-user fa-xl" aria-hidden="true"></i></a></li>
+                <li><a class="lg:p-4 py-3 rounded-md text-white px-0 mx-1 block" href="/logout"><i class="fa fa-sign-out fa-xl" aria-hidden="true"></i></a></li>
             </ul>
         </nav>
     </div>
 </header>
 
 <section class="m-1 flex justify-center items-center" id="balance">
-    <div class="flex justify-center items-center text-center h-full w-full my-4 py-4 bg-slate-500 rounded-xl" style="height: 50vh; width: 80vh;">
+    <div class="flex justify-center items-center text-center h-full w-full my-4 py-4 bg-white rounded-xl" style="height: 50vh; width: 80vh;">
         <h1 class="text-5xl">Balance: ₹{{bank.current_balance}}</h1>
     </div>
 </section>

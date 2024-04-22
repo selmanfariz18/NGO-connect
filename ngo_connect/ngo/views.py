@@ -63,7 +63,7 @@ def ngo_base(request):
     balance = ngousers.objects.get(user=request.user)
 
     # print(balance.is_balance_defined)
-    reciever_requests = RecieverRequests.objects.filter(to_user=request.user)
+    reciever_requests = RecieverRequests.objects.filter(to_user=request.user, status='pending')
 
     context = {
         'me' : user_name,
@@ -313,6 +313,7 @@ def ngo_donation(request):
     
 
 def accept_donation_request(request):
+    # view to accept request from receiver to ngo for donation
     if request.method == 'POST':
         to_user = request.POST['to_user']
         r_id = request.POST['id']
@@ -383,3 +384,24 @@ def accept_donation_request(request):
         # print(rec.status)
 
     return redirect("ngo_base")
+
+
+def reject_donation_request(request):
+    # view to reject request from receiver to ngo for donation
+    if request.method == 'POST':
+        r_id = request.POST['id']
+        to_user = request.POST['to_user']
+
+        to_user = get_object_or_404(User, email=to_user)
+
+        rec = RecieverRequests.objects.get(id=r_id)
+        rec.delete()
+
+        Notifications.objects.create(
+            user=to_user,
+            name="Request Rejected",
+            desc=f"Request rejected by {request.user.first_name}",
+            )
+        messages.success(request, "Request Rejected")   
+
+    return redirect("ngo_base")     

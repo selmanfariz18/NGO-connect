@@ -199,6 +199,8 @@
 </section>
 {% endif %}
 
+<!-- section to view donation request from receivers -->
+{% if reciever_requests %}
 <section class="text-center my-6 mx-4">
   <div class="items-center rounded-lg shadow-md p-3 my-3 justify-center align-middle">
     <p class="text-2xl">Donation Requests</p>
@@ -232,18 +234,11 @@
             <!-- <p>{{ item.ngo.user }}</p> -->
             <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Accept</button>
         </form>
-        <form method="post" action="/ngo/accept_donation_request">
-          {% csrf_token %}
-          <input type="hidden" name="to_user" value="{{ request.from_user }}">
+        <form method="post" action="/ngo/reject_donation_request">
+          {% csrf_token %}          
           <input type="hidden" name="id" value="{{ request.id }}">
-          {% if request.is_money_needed == True %}
-            <input type="hidden" name="amount" value="{{ request.amount }}">
-          {% else %}
-            <input type="hidden" name="goods_name" value="{{ request.goods_name }}">
-            <input type="hidden" name="count" value="{{ request.count }}">
-          {% endif %}
-          <!-- <p>{{ item.ngo.user }}</p> -->
-          <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Accept</button>
+          <input type="hidden" name="to_user" value="{{ request.from_user }}">         
+          <button type="submit" class="my-3 px-3 bg-red-500 rounded-lg">Reject</button>
         </form>
       </div>
     </div>  
@@ -251,6 +246,8 @@
     {% endfor %}
   </div>
 </section>
+{% endif %}
+<!-- donation request section end -->
 
 
 <section class="text-center my-6 mx-4">

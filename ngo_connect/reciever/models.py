@@ -42,3 +42,12 @@ class RecieverRequests(models.Model):
     desc = models.CharField(max_length=150, blank=True)
     status = models.CharField(max_length=10, choices=(('accepted', 'accepted'), ('rejected', 'rejected'), ('pending', 'pending'),), null=True)
 
+
+class RecieverRequestGoods(models.Model):
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_request_goods', null=True)
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_request_goods', null=True)    
+    thing_name = models.CharField(max_length=20, blank=True)
+    thing_quantity = models.IntegerField(null=True)
+    for_what = models.CharField(max_length=40, blank=True)
+    desc = models.CharField(max_length=150, blank=True)
+

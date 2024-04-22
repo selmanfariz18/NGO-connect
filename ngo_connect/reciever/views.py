@@ -186,7 +186,7 @@ def make_rec_request(request):
                 success_msg = "Request sent successfully to " + str(to_user.first_name)
                 messages.success(request, success_msg)
             except:
-                messages.error(request, "Error in request sending!")
+                messages.error(request, "Error in request sending!!!!")
             # print('Payment Type:', payment_type, 'Amount:', amount)
         elif payment_type == 'other':
             try:
@@ -196,8 +196,8 @@ def make_rec_request(request):
                     for_what = for_what,
                     desc = desc,
                     is_money_needed = False,
-                    goods_name = goods_name,
-                    count = count,
+                    thing_name = goods_name,
+                    thing_quantity = count,
                     status = 'pending',
                 )
                 success_msg = "Request sent successfully to " + str(to_user.first_name)

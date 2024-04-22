@@ -9,7 +9,7 @@ from django.contrib import messages
 from base.models import ngousers
 from django.contrib.auth.models import User
 from base.models import ngousers, Notifications
-from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequests
+from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequestGoods, RecieverRequests
 from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank
 
 import base64
@@ -322,9 +322,15 @@ def accept_donation_request(request):
         transaction_id = unique_id[:10]
 
         # bank, _ = NgoBank.objects.get_or_create(user=request.user)
-        rec = RecieverRequests.objects.get(id=r_id)
+        # rec = RecieverRequests.objects.get(id=r_id)
 
         if request.POST['amount']:
+            money = True
+
+        else:
+            money = False
+    
+        if money:
             amount = int(request.POST['amount'])
             bank, _ = NgoBank.objects.get_or_create(user=request.user)
             if (bank.current_balance-amount) >= 0:
@@ -376,9 +382,31 @@ def accept_donation_request(request):
                 )
 
         else :
-            goods_name = int(request.POST['goods_name'])
-            count = int(request.POST['count'])
-            messages.error(request, "Not ready to accept goods request")
+            thing_name = request.POST['goods_name']
+            thing_quantity = request.POST['count']
+            for_what = request.POST['for_what']
+            desc = request.POST['desc']
+            to_user = get_object_or_404(User, email=to_user)
+
+            rec = RecieverRequests.objects.get(id=r_id)
+            rec.status = 'accepted'
+            rec.save()
+
+            try:
+                # Directly create a new transaction
+                RecieverRequestGoods.objects.create(
+                    from_user=request.user,
+                    to_user=to_user,
+                    thing_quantity=thing_quantity,
+                    thing_name=thing_name,
+                    for_what=for_what,
+                    desc=desc,
+                )
+            except IntegrityError:
+                # Handle the case where the transaction_id is not unique, which should be rare
+                pass
+
+            messages.success(request, "Goods request accepted")
 
 
         # print(rec.status)

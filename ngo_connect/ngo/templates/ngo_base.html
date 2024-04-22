@@ -200,8 +200,8 @@
 {% endif %}
 
 {% if reciever_requests %}
-<section class="text-center my-6 mx-4">
-  <div class="items-center rounded-lg shadow-md p-3 my-3 justify-center align-middle">
+<section class="text-center my-6 h-96 bg-lime-800">
+  <div class="items-center rounded-lg shadow-md p-3 my-3 justify-center align-middle overflow-y-auto h-96">
     <p class="text-2xl">Donation Requests</p>
     {% for request in reciever_requests %}
     {% if request.status == 'pending' %}
@@ -213,8 +213,8 @@
         {% if request.is_money_needed == True %}
           <li class="text-left">AMOUNT: ₹{{ request.amount }}</li>
         {% else %}
-          <li class="text-left">Goods Name: {{ request.goods_name }}</li>
-          <li class="text-left">Count: {{ request.count }}</li>
+          <li class="text-left">Goods Name: {{ request.thing_name }}</li>
+          <li class="text-left">Count: {{ request.thing_quantity }}</li>
         {% endif %}
       </ul>
       <div class="flex justify-around">  
@@ -232,8 +232,11 @@
             {% if request.is_money_needed == True %}
               <input type="hidden" name="amount" value="{{ request.amount }}">
             {% else %}
-              <input type="hidden" name="goods_name" value="{{ request.goods_name }}">
-              <input type="hidden" name="count" value="{{ request.count }}">
+              <input type="hidden" name="amount">
+              <input type="hidden" name="goods_name" value="{{ request.thing_name }}">
+              <input type="hidden" name="count" value="{{ request.thing_quantity }}">
+              <input type="hidden" name="for_what" value="{{ request.for_what }}">
+              <input type="hidden" name="desc" value="{{ request.desc }}">
             {% endif %}
             <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Confirm Accept</button>
           </form>

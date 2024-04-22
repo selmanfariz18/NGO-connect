@@ -199,7 +199,6 @@
 </section>
 {% endif %}
 
-<!-- section to view donation request from receivers -->
 {% if reciever_requests %}
 <section class="text-center my-6 mx-4">
   <div class="items-center rounded-lg shadow-md p-3 my-3 justify-center align-middle">
@@ -215,13 +214,16 @@
           <li class="text-left">Goods Name: {{ request.goods_name }}</li>
           <li class="text-left">Count: {{ request.count }}</li>
         {% endif %}
-        <!-- <li class="text-left">Type:  </li>
-        <li class="text-left">Status: </li>
-        <li class="text-left">ADDRESS:{{request.from_user.address}} </li>
-        <li class="text-left">PINCODE: </li> -->
       </ul>
-      <div class="flex justify-around">     
-        <form method="post" action="/ngo/accept_donation_request">
+      <div class="flex justify-around">  
+          <button type="button" class="open-confirm my-3 px-3 bg-green-500 rounded-lg">Accept</button>
+                
+          <button type="button" class="open-reject my-3 px-3 bg-red-500 rounded-lg">Reject</button>
+      </div>
+      <div class="confirm-accept hidden bg-white p-3 rounded shadow-md">
+        <p>Are you sure you want to accept this request?</p>
+        <div class="flex justify-around">
+          <form method="post" action="/ngo/accept_donation_request">
             {% csrf_token %}
             <input type="hidden" name="to_user" value="{{ request.from_user }}">
             <input type="hidden" name="id" value="{{ request.id }}">
@@ -231,15 +233,22 @@
               <input type="hidden" name="goods_name" value="{{ request.goods_name }}">
               <input type="hidden" name="count" value="{{ request.count }}">
             {% endif %}
-            <!-- <p>{{ item.ngo.user }}</p> -->
-            <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Accept</button>
-        </form>
-        <form method="post" action="/ngo/reject_donation_request">
-          {% csrf_token %}          
-          <input type="hidden" name="id" value="{{ request.id }}">
-          <input type="hidden" name="to_user" value="{{ request.from_user }}">         
-          <button type="submit" class="my-3 px-3 bg-red-500 rounded-lg">Reject</button>
-        </form>
+            <button type="submit" class="my-3 px-3 bg-green-500 rounded-lg">Confirm Accept</button>
+          </form>
+          <button class="close-confirm my-3 px-3 bg-red-500 rounded-lg">Cancel</button>
+        </div>
+      </div>
+      <div class="confirm-reject hidden bg-white p-3 rounded shadow-md">
+        <p>Are you sure you want to reject this request?</p>
+        <div class="flex justify-around">
+          <form method="post" action="/ngo/reject_donation_request">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ request.id }}">
+            <input type="hidden" name="to_user" value="{{ request.from_user }}">
+            <button type="submit" class="my-3 px-3 bg-red-500 rounded-lg">Confirm Reject</button>
+          </form>
+          <button class="close-reject my-3 px-3 bg-red-500 rounded-lg">Cancel</button>
+        </div>
       </div>
     </div>  
     {% endif %}
@@ -247,7 +256,53 @@
   </div>
 </section>
 {% endif %}
-<!-- donation request section end -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const acceptButtons = document.querySelectorAll('.open-confirm');
+    const rejectButtons = document.querySelectorAll('.open-reject');
+    const closeAcceptButtons = document.querySelectorAll('.close-confirm');
+    const closeRejectButtons = document.querySelectorAll('.close-reject');
+
+    function closeAllPopups() {
+      document.querySelectorAll('.confirm-accept, .confirm-reject').forEach(popup => {
+        popup.classList.add('hidden');
+      });
+    }
+
+    acceptButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        closeAllPopups();
+        const parent = button.closest('.bg-lime-100');
+        parent.querySelector('.confirm-accept').classList.remove('hidden');
+      });
+    });
+
+    rejectButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        closeAllPopups();
+        const parent = button.closest('.bg-lime-100');
+        parent.querySelector('.confirm-reject').classList.remove('hidden');
+      });
+    });
+
+    closeAcceptButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const parent = button.closest('.bg-lime-100');
+        parent.querySelector('.confirm-accept').classList.add('hidden');
+      });
+    });
+
+    closeRejectButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const parent = button.closest('.bg-lime-100');
+        parent.querySelector('.confirm-reject').classList.add('hidden');
+      });
+    });
+  });
+</script>
+
+
 
 
 <section class="text-center my-6 mx-4">

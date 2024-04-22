@@ -405,3 +405,6 @@ def reject_donation_request(request):
         messages.success(request, "Request Rejected")   
 
     return redirect("ngo_base")     
+
+def confirm_accept_page(request):
+    return render(request, 'request_confirmation_donation.html')

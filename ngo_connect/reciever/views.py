@@ -154,6 +154,8 @@ def reciever_profile_page(request):
 def make_rec_request(request):
     if request.method == 'POST':
         # Retrieve form data using .get() with defaults to handle missing fields
+        for_what = request.POST.get('for_what', None)
+        desc = request.POST.get('desc', None)
         payment_type = request.POST.get('payment_type', None)
         amount = request.POST.get('amount', None)
         goods_name = request.POST.get('goods_name', None)
@@ -175,6 +177,8 @@ def make_rec_request(request):
                 RecieverRequests.objects.create(
                     from_user = from_user,
                     to_user = to_user,
+                    for_what = for_what,
+                    desc = desc,
                     is_money_needed = True,
                     amount = amount,
                     status = 'pending',
@@ -189,6 +193,8 @@ def make_rec_request(request):
                 RecieverRequests.objects.create(
                     from_user = from_user,
                     to_user = to_user,
+                    for_what = for_what,
+                    desc = desc,
                     is_money_needed = False,
                     goods_name = goods_name,
                     count = count,

@@ -26,6 +26,18 @@
         </div>
         <form action="/reciever/make_rec_request" method="POST">
         {% csrf_token %}
+          <div class="flex flex-col p-4 space-y-2">
+            <div class="flex items-center py-3">
+              <p class="ml-2 text-sm font-medium text-black-900 dark:text-black-300">Need:</p>
+              <input type="text" name="for_what" placeholder="" required class="ml-2 p-1.5 text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
+            </div>
+          </div>
+          <div class="flex flex-col p-4 space-y-2">
+            <div class="flex items-center py-3">
+              <p class="ml-2 text-sm font-medium text-black-900 dark:text-black-300">Detail your need:</p>
+              <input type="text" name="desc" placeholder="" required class="h-20 ml-2 p-1.5 text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
+            </div>
+          </div>
           <div class="flex items-center py-3 w-auto justify-center">
             <label class="inline-flex items-center mr-4">
               <input type="radio" name="payment_type" value="money" checked class="form-radio" onchange="toggleInput(this.value);">

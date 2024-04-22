@@ -38,5 +38,7 @@ class RecieverRequests(models.Model):
     amount = models.IntegerField(null=True)
     thing_name = models.CharField(max_length=20, blank=True)
     thing_quantity = models.IntegerField(null=True)
+    for_what = models.CharField(max_length=40, blank=True)
+    desc = models.CharField(max_length=150, blank=True)
     status = models.CharField(max_length=10, choices=(('accepted', 'accepted'), ('rejected', 'rejected'), ('pending', 'pending'),), null=True)
 

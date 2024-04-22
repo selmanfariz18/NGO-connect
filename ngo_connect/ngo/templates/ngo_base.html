@@ -208,6 +208,8 @@
     <div class="bg-lime-100 rounded-lg shadow-md p-3 my-3 mx-auto w-3/4">
       <ul class="mt-3">
         <li class="text-left font-semibold">NAME: {{request.from_user.first_name}} </li>
+        <li class="text-left">Need: {{request.for_what}} </li>
+        <li class="text-left">Detail Need: {{request.desc}} </li>
         {% if request.is_money_needed == True %}
           <li class="text-left">AMOUNT: ₹{{ request.amount }}</li>
         {% else %}

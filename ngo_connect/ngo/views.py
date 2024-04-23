@@ -434,5 +434,18 @@ def reject_donation_request(request):
 
     return redirect("ngo_base")     
 
-def confirm_accept_page(request):
-    return render(request, 'request_confirmation_donation.html')
+def ngo_reciever_details(request):
+    if request.method == 'POST':
+        id = request.POST['id']
+        user = get_object_or_404(ngousers, id=id).user
+
+        goods = RecieverRequestGoods.objects.filter(to_user=user).order_by('-date')
+        transactions = NgoBankTransactions.objects.filter(to_user=user).order_by('-done_at')
+
+        context={
+            'user': user,
+            'goods': goods,
+            'transactions':transactions,
+        }
+        
+    return render(request, 'ngo_reciever_details.html', context)

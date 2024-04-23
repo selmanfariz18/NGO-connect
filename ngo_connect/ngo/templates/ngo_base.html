@@ -321,7 +321,7 @@
           {% if r.user == user and r.reciever_type == 'orphanage' %}
           {% for i in reciever_ngo %}
           {% if i.reciever == user and i.user == me and i.status == 'accepted' %}
-          <div class="w-3/4 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
+          <div class="w-3/4 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-white rounded-lg">
             <ul class="mt-3">
               <li class="text-base font-semibold">
               
@@ -345,6 +345,12 @@
                   <!-- <p>{{ item.ngo.user }}</p> -->
                   <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">Donate</button>
               </form>
+              <form method="post" action="/ngo/ngo_reciever_details" class="px-5">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ detail.id }}">
+                <!-- <p>{{ item.ngo.user }}</p> -->
+                <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">More details</button>
+              </form>
             </div>
           </div>       
           {% endif %}
@@ -366,7 +372,7 @@
           {% if r.user == user and r.reciever_type == 'OAH' %}
           {% for i in reciever_ngo %}
           {% if i.reciever == user and i.user == me and i.status == 'accepted' %}
-          <div class="w-3/4 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
+          <div class="w-3/4 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-white rounded-lg">
             <ul class="mt-3">
               <li class="text-base font-semibold">
               
@@ -389,6 +395,12 @@
                   <input type="hidden" name="id" value="{{ detail.id }}">
                   <!-- <p>{{ item.ngo.user }}</p> -->
                   <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">Donate</button>
+              </form>
+              <form method="post" action="/ngo/ngo_reciever_details" class="px-5">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ detail.id }}">
+                <!-- <p>{{ item.ngo.user }}</p> -->
+                <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">More details</button>
               </form>
             </div>
           </div>
@@ -412,7 +424,7 @@
         {% if r.user == user and r.reciever_type != 'OAH' and r.reciever_type != 'orphanage' %}
         {% for i in reciever_ngo %}
         {% if i.reciever == user and i.user == me and i.status == 'accepted' %}
-        <div class="w-3/4 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-lime-100 rounded-lg">
+        <div class="w-3/4 mx-2 shadow-md shadow-blue-300 p-3 my-3 bg-white rounded-lg">
           <ul class="mt-3">
             <li class="text-base font-semibold">
             
@@ -435,6 +447,12 @@
                 <input type="hidden" name="id" value="{{ detail.id }}">
                 <!-- <p>{{ item.ngo.user }}</p> -->
                 <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">Donate</button>
+            </form>
+            <form method="post" action="/ngo/ngo_reciever_details" class="px-5">
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{ detail.id }}">
+              <!-- <p>{{ item.ngo.user }}</p> -->
+              <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">More details</button>
             </form>
           </div>
         </div>

@@ -50,4 +50,5 @@ class RecieverRequestGoods(models.Model):
     thing_quantity = models.IntegerField(null=True)
     for_what = models.CharField(max_length=40, blank=True)
     desc = models.CharField(max_length=150, blank=True)
+    date = models.DateTimeField(auto_now=True)
 

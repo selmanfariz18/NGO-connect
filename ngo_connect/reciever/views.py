@@ -242,6 +242,14 @@ def add_residents(request):
                 age = age,
                 gender = gender,
             )
+            try:
+                receiver = ReceiverMoreDetails.objects.get(user=request.user)
+            except ReceiverMoreDetails.DoesNotExist:
+                receiver = ReceiverMoreDetails(user=request.user) 
+            if receiver.residents_count == None:
+                receiver.residents_count = 0
+            receiver.residents_count +=1
+            receiver.save()           
             messages.success(request, "Resident added!")
             return redirect("residents")
         except:

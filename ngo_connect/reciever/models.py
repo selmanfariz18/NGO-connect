@@ -6,6 +6,7 @@ class ReceiverMoreDetails(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reciever_type = models.CharField(max_length=12, null=True)  # Whether receiver is OLH, Orphanage, etc.
     is_reciever_type_defined = models.BooleanField(default=False)
+    residents_count = models.IntegerField(null=True)
     
 class Ngo_reciever(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

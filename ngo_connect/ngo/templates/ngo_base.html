@@ -326,15 +326,16 @@
               <li class="text-base font-semibold">
               
               </li>
-              <li class="text-left">EMAIL: {{ user.username }}</li>
-              <li class="text-left">NAME: {{ user.first_name }}</li>
-              <li class="text-left">Type: {{ r.reciever_type }} </li>
-              <li class="text-left">Status: {{ i.status }} </li>
-              <li class="text-left">ADDRESS: {{ detail.address }}</li>
-              <li class="text-left">PINCODE: {{ detail.pincode }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Email:</span> {{ user.username }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Name:</span> {{ user.first_name }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Type:</span> {{ r.reciever_type }} </li>
+              <li class="text-left"><span class="font-semibold text-lg">Status:</span> {{ i.status }} </li>
+              <li class="text-left"><span class="font-semibold text-lg">Address:</span> {{ detail.address }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Pincode:</span> {{ detail.pincode }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Residents Count:</span>{% if r.residents_count %} {{ r.residents_count }} {% else %}0{% endif %}</li>
               {% for bal in reciever_bank %}
               {% if bal.user == detail.user %}
-                <li class="text-left">AMOUNT: ₹{{ bal.current_balance }}</li>
+                <li class="text-left"><span class="font-semibold text-lg">Amount:</span> ₹{{ bal.current_balance }}</li>
               {% endif %}
               {% endfor %}
             </ul>
@@ -352,7 +353,7 @@
                 <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">More details</button>
               </form>
             </div>
-          </div>       
+          </div>     
           {% endif %}
           {% endfor %}
           {% endif %}
@@ -377,15 +378,16 @@
               <li class="text-base font-semibold">
               
               </li>
-              <li class="text-left">EMAIL: {{ user.username }}</li>
-              <li class="text-left">NAME: {{ user.first_name }}</li>
-              <li class="text-left">Type: {{ r.reciever_type }} </li>
-              <li class="text-left">Status: {{ i.status }} </li>
-              <li class="text-left">ADDRESS: {{ detail.address }}</li>
-              <li class="text-left">PINCODE: {{ detail.pincode }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Email:</span> {{ user.username }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Name:</span> {{ user.first_name }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Type:</span> {{ r.reciever_type }} </li>
+              <li class="text-left"><span class="font-semibold text-lg">Status:</span> {{ i.status }} </li>
+              <li class="text-left"><span class="font-semibold text-lg">Address:</span> {{ detail.address }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Pincode:</span> {{ detail.pincode }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Residents Count:</span>{% if r.residents_count %} {{ r.residents_count }} {% else %}0{% endif %}</li>
               {% for bal in reciever_bank %}
               {% if bal.user == detail.user %}
-                <li class="text-left">AMOUNT: ₹{{ bal.current_balance }}</li>
+                <li class="text-left"><span class="font-semibold text-lg">Amount:</span> ₹{{ bal.current_balance }}</li>
               {% endif %}
               {% endfor %}
             </ul>
@@ -429,15 +431,16 @@
             <li class="text-base font-semibold">
             
             </li>
-            <li class="text-left">EMAIL: {{ i.user.username }}</li>
-            <li class="text-left">NAME: {{ i.user.first_name }}</li>
-            <li class="text-left">Type: {{ r.reciever_type }} </li>
-            <li class="text-left">Status: {{ i.status }} </li>
-            <li class="text-left">ADDRESS: {{ detail.address }}</li>
-            <li class="text-left">PINCODE: {{ detail.pincode }}</li>
+            <li class="text-left"><span class="font-semibold text-lg">Email:</span> {{ i.user.username }}</li>
+            <li class="text-left"><span class="font-semibold text-lg">Name:</span>  {{ i.user.first_name }}</li>
+            <li class="text-left"><span class="font-semibold text-lg">Type:</span> {{ r.reciever_type }} </li>
+            <li class="text-left"><span class="font-semibold text-lg">Status:</span> {{ i.status }} </li>
+            <li class="text-left"><span class="font-semibold text-lg">Address:</span> {{ detail.address }}</li>
+            <li class="text-left"><span class="font-semibold text-lg">Pincode:</span> {{ detail.pincode }}</li>
+            <li class="text-left"><span class="font-semibold text-lg">Residents Count:</span>{% if r.residents_count %} {{ r.residents_count }} {% else %}0{% endif %}</li>
             {% for bal in reciever_bank %}
             {% if bal.user == detail.user %}
-              <li class="text-left">AMOUNT: ₹{{ bal.current_balance }}</li>
+              <li class="text-left"><span class="font-semibold text-lg">Amount:</span> ₹{{ bal.current_balance }}</li>
             {% endif %}
             {% endfor %}
           </ul>

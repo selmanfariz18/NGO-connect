@@ -9,8 +9,9 @@ from django.contrib import messages
 from base.models import ngousers
 from django.contrib.auth.models import User
 from base.models import ngousers, Notifications
-from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequestGoods, RecieverRequests
+from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequestGoods, RecieverRequests, RecieverResidents
 from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank
+from django.db.models import Count
 
 import base64
 import uuid
@@ -29,6 +30,7 @@ def ngo_base(request):
     reciever = ReceiverMoreDetails.objects.all()
     reciever_ngo = Reciever_under_ngo.objects.all()
     reciever_bank = RecieverBank.objects.all()
+    reciever_residents = RecieverResidents.objects.all()
     count = 1
     ngo_request_count = Reciever_under_ngo.objects.filter(user=request.user, status='pending')
     ngo_request_oah_count = Reciever_under_ngo.objects.filter(
@@ -65,6 +67,9 @@ def ngo_base(request):
     # print(balance.is_balance_defined)
     reciever_requests = RecieverRequests.objects.filter(to_user=request.user, status='pending')
 
+    residents_count = RecieverResidents.objects.values('reciever').annotate(total=Count('id'))
+    residents_count_dict = {item['reciever']: item['total'] for item in residents_count}
+
     context = {
         'me' : user_name,
         'users' : users,
@@ -81,7 +86,8 @@ def ngo_base(request):
         'notification_count' : notification_count,
         'balance' : balance,
         'reciever_bank' : reciever_bank,
-        'reciever_requests' : reciever_requests
+        'reciever_requests' : reciever_requests,
+        'residents_count': residents_count_dict,
     }
 
     return render(request, 'ngo_base.html', context)

@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from reciever.models import ReceiverMoreDetails, ReceiverMoreDetails, RecieverRequests
 from django.http import Http404
 from ngo.models import NgoBankTransactions, Reciever_under_ngo
-from reciever.models import RecieverBank
+from reciever.models import RecieverBank, RecieverResidents
 
 
 
@@ -204,7 +204,7 @@ def make_rec_request(request):
                 messages.success(request, success_msg)
             except:
                 messages.error(request, "Error in request sending!")
-            print('Payment Type:', payment_type, 'Goods Name:', goods_name, 'Count:', count)
+            # print('Payment Type:', payment_type, 'Goods Name:', goods_name, 'Count:', count)
 
         return redirect("receiver_base")
 
@@ -217,3 +217,35 @@ def make_rec_request(request):
         'ngo': ngo,
     }
     return render(request, 'make_rec_request.html', context)
+
+def residents(request):
+
+    residents = RecieverResidents.objects.filter(reciever=request.user).order_by('name')
+
+    context = {
+        'residents' : residents,
+    }
+
+    return render(request, 'residents.html', context)
+
+
+def add_residents(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')        
+
+        try:
+            RecieverResidents.objects.create(
+                reciever = request.user,
+                name = name,
+                age = age,
+                gender = gender,
+            )
+            messages.success(request, "Resident added!")
+            return redirect("residents")
+        except:
+            messages.error(request, "Error in adding Resident!")
+            return redirect("residents")
+
+    return render(request, 'add_residents.html')

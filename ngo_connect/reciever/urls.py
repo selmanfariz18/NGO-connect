@@ -8,4 +8,6 @@ urlpatterns = [
     path('dlt_notification', views.dlt_notification, name="dlt_notification"),
     path('reciever_profile_page', views.reciever_profile_page, name="reciever_profile_page"),
     path('make_rec_request', views.make_rec_request, name="make_rec_request"),
+    path('residents', views.residents, name="residents"),
+    path('add_residents', views.add_residents, name="add_residents"),
 ]

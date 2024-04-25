@@ -52,3 +52,9 @@ class RecieverRequestGoods(models.Model):
     desc = models.CharField(max_length=150, blank=True)
     date = models.DateTimeField(auto_now=True)
 
+
+class RecieverResidents(models.Model):
+    reciever = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=20, blank=True)
+    age = models.IntegerField(null=True)
+    gender = models.CharField(max_length=8, choices=(('male', 'male'), ('female', 'female'),), null=True)

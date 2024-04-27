@@ -10,4 +10,6 @@ urlpatterns = [
     path('make_rec_request', views.make_rec_request, name="make_rec_request"),
     path('residents', views.residents, name="residents"),
     path('add_residents', views.add_residents, name="add_residents"),
+    path('event_add', views.event_add, name="event_add"),
+    path('events_view', views.events_view, name="events_view"),
 ]

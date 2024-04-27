@@ -97,6 +97,9 @@
         <nav>
           <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
             <li>
+              <a class="md:p-4 py-3 px-0 block text-white" href="/reciever/events_view">Events</a>
+            </li>
+            <li>
               <a class="md:p-4 py-3 px-0 block text-white" href="/reciever/residents">Residents</a>
             </li>
             <li>
@@ -244,13 +247,21 @@
     <!-- {{ ngo.status }} -->
     {% endif %}
 
-    <a href="/reciever/make_rec_request">
-      <div class="container text-center mx-auto bg-white shadow-sm shadow-gray-600 w-3/12 rounded-xl">
-        <p>Need anything?</p>
-        <p>Make a request to your NGO</p>
-      </div>
-    </a>
+    <div class="flex justify-around w-2/3 mx-auto">
+      <a href="/reciever/make_rec_request" class="w-64">
+        <div class="container text-center mx-auto bg-white shadow-sm shadow-gray-600 rounded-xl">
+          <p>Need anything?</p>
+          <p>Make a request to your NGO</p>
+        </div>
+      </a>
 
+      <a href="/reciever/event_add" class="w-64">
+        <div class="container text-center mx-auto bg-white shadow-sm shadow-gray-600 rounded-xl">
+          <p>Planning any event?</p>
+          <p>Inform your NGO for their support</p>
+        </div>
+      </a>
+    </div>
 
     {% if transactions %}
     <h1 class="text-center mt-6 text-4xl">Transactions</h1>

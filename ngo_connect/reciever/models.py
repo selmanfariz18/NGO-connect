@@ -59,3 +59,12 @@ class RecieverResidents(models.Model):
     name = models.CharField(max_length=20, blank=True)
     age = models.IntegerField(null=True)
     gender = models.CharField(max_length=8, choices=(('male', 'male'), ('female', 'female'),), null=True)
+
+
+class Events(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    event_name = models.CharField(max_length=100)
+    desc = models.TextField()
+    date = models.DateField()  
+    start_time = models.TimeField()
+    

@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from reciever.models import ReceiverMoreDetails, ReceiverMoreDetails, RecieverRequests
 from django.http import Http404
 from ngo.models import NgoBankTransactions, Reciever_under_ngo
-from reciever.models import RecieverBank, RecieverResidents
+from reciever.models import RecieverBank, RecieverResidents, Events
 
 
 
@@ -257,3 +257,36 @@ def add_residents(request):
             return redirect("residents")
 
     return render(request, 'add_residents.html')
+
+def event_add(request):
+    if request.method == 'POST':
+        event_name = request.POST.get('event_name')
+        desc = request.POST.get('desc')
+        date = request.POST.get('date') 
+        start_time = request.POST.get('start_time') 
+
+        try:
+            Events.objects.create(
+                user = request.user,
+                event_name = event_name,
+                desc = desc,
+                date = date,
+                start_time = start_time,
+            )          
+            messages.success(request, "Event added!")
+            return redirect("events_view")
+        except:
+            messages.error(request, "Error in adding Event!")
+            return redirect("events_view")
+
+    return render(request, 'event_add.html')
+
+def events_view(request):
+
+    events = Events.objects.filter(user=request.user).order_by('date')
+
+    context = {
+        'events' : events,
+    }
+
+    return render(request, 'events_view.html', context)

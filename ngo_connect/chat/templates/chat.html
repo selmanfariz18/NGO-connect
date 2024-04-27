@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <h2>Chat</h2>
+        <div style="float: left; width: 20%;">
+            <h3>Conversations</h3>
+            <ul>
+                {% for user in users %}
+                <li>
+                    <a href="{% url 'chat_with' user.username %}">{{ user.username }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="float: right; width: 75%;">
+            <h3>Messages</h3>
+            <ul>
+                {% for message in messages %}
+                <li>
+                    <strong>{{ message.sender.username }}:</strong> {{ message.message }} <em>{{ message.timestamp }}</em>
+                </li>
+                {% endfor %}
+            </ul>
+            <form method="post" action="{% url 'send_message' %}">
+                {% csrf_token %}
+                <input type="text" name="receiver" placeholder="Enter username" required>
+                <textarea name="message" placeholder="Type your message here..." required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

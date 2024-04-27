@@ -24,4 +24,5 @@ urlpatterns = [
     path('ngo/', include('ngo.urls')),
     path('donor/',include('donor.urls')),
     path('reciever/', include('reciever.urls')),
+    path('chat/', include('chat.urls')),
 ]  

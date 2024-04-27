@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'ngo',
     'donor',
     'reciever',
+    'chat',
 ]
 
 MIDDLEWARE = [

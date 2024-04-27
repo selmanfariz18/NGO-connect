@@ -129,7 +129,7 @@
 
 
     {% if transactions %}
-    <h1 class="text-left mx-48 my-5 text-3xl mt-5 text-white">Transactions</h1>
+    <h1 class="text-left mx-48 my-5 text-3xl mt-10 text-white">Transactions</h1>
     <section id="transactions" class="m-4 px-4 flex justify-center items-center -z-10">
         <div class="relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg w-4/5">
             <table class="w-full text-sm text-left rtl:text-right text-black dark:text-black">
@@ -178,7 +178,49 @@
       {% endif %}
     </section>
 
-
+    {% if residents %}
+    <h1 class="text-left mx-48 my-5 text-3xl mt-10 text-white">Residents</h1>
+    <section id="transactions" class="m-4 px-4 flex justify-center items-center -z-10">
+        <div class="relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg w-4/5">
+            <table class="w-full text-sm text-left rtl:text-right text-black dark:text-black">
+                <thead class="text-xs text-black uppercase bg-white">
+                  <tr>
+                      <th scope="col" class="px-6 py-3">
+                          Name
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Age
+                      </th>
+                      <!-- <th scope="col" class="px-6 py-3">
+                          Transaction Type
+                      </th> -->
+                      <th scope="col" class="px-6 py-3">
+                          Gender
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for i in residents %}
+                  <tr class="bg-white border-b dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
+                          {{ i.name }}
+                      </th>
+                      <td class="px-6 py-4">
+                          {{ i.age }}
+                      </td>
+                      <!-- <td class="px-6 py-4">
+                          {{ i.transaction_type }}
+                      </td> -->
+                      <td class="px-6 py-4">
+                          {{ i.gender }}
+                      </td>                  
+                  </tr>  
+                  {% endfor %}            
+              </tbody>
+          </table>
+      </div>
+      {% endif %}
+    </section>
     
 </body>
 </html>

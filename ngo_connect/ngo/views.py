@@ -447,11 +447,13 @@ def ngo_reciever_details(request):
 
         goods = RecieverRequestGoods.objects.filter(to_user=user).order_by('-date')
         transactions = NgoBankTransactions.objects.filter(to_user=user).order_by('-done_at')
+        residents = RecieverResidents.objects.filter(reciever=user).order_by('-age')
 
         context={
             'user': user,
             'goods': goods,
             'transactions':transactions,
+            'residents' :residents,
         }
         
     return render(request, 'ngo_reciever_details.html', context)

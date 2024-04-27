@@ -9,9 +9,11 @@ from django.contrib import messages
 from base.models import ngousers
 from django.contrib.auth.models import User
 from base.models import ngousers, Notifications
-from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequestGoods, RecieverRequests, RecieverResidents
+from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequestGoods, RecieverRequests, RecieverResidents, Events
 from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank
 from django.db.models import Count
+from django.utils.timezone import now
+
 
 import base64
 import uuid
@@ -70,6 +72,8 @@ def ngo_base(request):
     residents_count = RecieverResidents.objects.values('reciever').annotate(total=Count('id'))
     residents_count_dict = {item['reciever']: item['total'] for item in residents_count}
 
+    events = Events.objects.filter(date__gte=now().date()).order_by('date', 'start_time')
+
     context = {
         'me' : user_name,
         'users' : users,
@@ -88,6 +92,7 @@ def ngo_base(request):
         'reciever_bank' : reciever_bank,
         'reciever_requests' : reciever_requests,
         'residents_count': residents_count_dict,
+        'events': events,
     }
 
     return render(request, 'ngo_base.html', context)

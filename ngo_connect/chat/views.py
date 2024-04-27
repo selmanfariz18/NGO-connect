@@ -9,13 +9,54 @@ from chat.models import Message
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from django.db.models import Q
+from django.db.models import OuterRef, Subquery, Max, Q, DateTimeField
 
 # Create your views here.
 
 
 def home_chat(request):
     return render(request, 'chat.html')
+
+class ChatListView(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        # Get the latest timestamp for sent and received messages for each user
+        last_sent = Message.objects.filter(
+            sender=request.user,
+            receiver=OuterRef('pk')
+        ).order_by().values('receiver').annotate(
+            latest=Max('timestamp')
+        ).values('latest')
+
+        last_received = Message.objects.filter(
+            receiver=request.user,
+            sender=OuterRef('pk')
+        ).order_by().values('sender').annotate(
+            latest=Max('timestamp')
+        ).values('latest')
+
+        # Annotate users with the latest interaction date using Subquery
+        users = User.objects.annotate(
+            last_interaction=Max(
+                Subquery(last_sent, output_field=DateTimeField()),
+                Subquery(last_received, output_field=DateTimeField())
+            )
+        ).filter(
+            Q(sent_messages__receiver=request.user) |
+            Q(received_messages__sender=request.user)
+        ).exclude(username=request.user.username).order_by('-last_interaction')
+
+        return render(request, 'chat_list.html', {'users': users})
+
+class ChatDetailView(View):
+    @method_decorator(login_required)
+    def get(self, request, username, *args, **kwargs):
+        other_user = User.objects.get(username=username)
+        messages = Message.objects.filter(
+            (Q(sender=request.user) & Q(receiver=other_user)) | 
+            (Q(sender=other_user) & Q(receiver=request.user))
+        ).order_by('timestamp')
+        return render(request, 'chat_detail.html', {'messages': messages, 'other_user': other_user})
 
 class SendMessageView(View):
     @method_decorator(login_required)
@@ -24,27 +65,4 @@ class SendMessageView(View):
         message_text = request.POST.get('message')
         receiver = User.objects.get(username=receiver_username)
         Message.objects.create(sender=request.user, receiver=receiver, message=message_text)
-        return redirect('chat')
-
-class ChatView(View):
-    @method_decorator(login_required)
-    def get(self, request, *args, **kwargs):
-        # Fetch messages where the user is either the sender or the receiver
-        messages = Message.objects.filter(Q(sender=request.user) | Q(receiver=request.user)).order_by('-timestamp')
-        
-        # Get distinct users involved in the messages
-        users_messaged = User.objects.filter(
-            Q(sent_messages__receiver=request.user) | Q(received_messages__sender=request.user)
-        ).distinct()
-
-        return render(request, 'chat.html', {'messages': messages, 'users': users_messaged})
-    
-class ChatWithUserView(View):
-    @method_decorator(login_required)
-    def get(self, request, username, *args, **kwargs):
-        other_user = User.objects.get(username=username)
-        messages = Message.objects.filter(
-            (Q(sender=request.user) & Q(receiver=other_user)) | 
-            (Q(sender=other_user) & Q(receiver=request.user))
-        ).order_by('timestamp')
-        return render(request, 'chat_with_user.html', {'messages': messages, 'other_user': other_user})
+        return redirect('chat_detail', username=receiver_username)

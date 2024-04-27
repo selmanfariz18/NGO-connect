@@ -1,10 +1,11 @@
 from django.urls import path
 from chat import views
-from chat.views import SendMessageView, ChatView, ChatWithUserView
+from chat.views import ChatListView, ChatDetailView, SendMessageView
+
 
 urlpatterns = [
     path('',views.home_chat, name="home_chat"),
-    path('send/', SendMessageView.as_view(), name='send_message'),
-    path('chat/', ChatView.as_view(), name='chat'),
-    path('<str:username>/', ChatWithUserView.as_view(), name='chat_with'),
+    path('chat/', ChatListView.as_view(), name='chat_list'),
+    path('chat/<str:username>/', ChatDetailView.as_view(), name='chat_detail'),
+    path('send_message/', SendMessageView.as_view(), name='send_message'),
 ]

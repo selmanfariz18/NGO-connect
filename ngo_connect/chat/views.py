@@ -46,7 +46,18 @@ class ChatListView(View):
             Q(received_messages__sender=request.user)
         ).exclude(username=request.user.username).order_by('-last_interaction')
 
-        return render(request, 'chat_list.html', {'users': users})
+        try:
+            ngo_user = ngousers.objects.get(user=request.user)
+        except ngousers.DoesNotExist:
+            ngo_user = ngousers(user=request.user)
+
+
+        context = {
+            'user_type' : ngo_user.user_type,
+            'users': users,
+        }
+
+        return render(request, 'chat_list.html', context)
 
 class ChatDetailView(View):
     @method_decorator(login_required)

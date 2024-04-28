@@ -50,11 +50,12 @@ class ChatListView(View):
             ngo_user = ngousers.objects.get(user=request.user)
         except ngousers.DoesNotExist:
             ngo_user = ngousers(user=request.user)
-
+        users_list = User.objects.exclude(username=request.user.username).exclude(is_superuser=True)
 
         context = {
             'user_type' : ngo_user.user_type,
             'users': users,
+            'all_users': users_list
         }
 
         return render(request, 'chat_list.html', context)
@@ -76,4 +77,18 @@ class SendMessageView(View):
         message_text = request.POST.get('message')
         receiver = User.objects.get(username=receiver_username)
         Message.objects.create(sender=request.user, receiver=receiver, message=message_text)
+        Notifications.objects.create(
+            user=receiver,
+            name="Message received",
+            desc=f"{request.user.first_name} messaged you!",
+        )
         return redirect('chat_detail', username=receiver_username)
+    
+class StartChatView(View):
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        receiver_username = request.POST.get('receiver')
+        if not receiver_username:
+            # Handle case where no user is selected
+            return redirect('chat_list')
+        return redirect('chat_detail', username=receiver_username)  

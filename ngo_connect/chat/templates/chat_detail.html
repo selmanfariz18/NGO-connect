@@ -12,28 +12,39 @@
     />
 </head>
 <body>
-    <section>
-        <h2>Chat with {{ other_user.username }}</h2>
-        <div>
+    <section class="text-center w-1/4 mx-auto rounded-2xl h-3/4 mt-10" style="background-color: #1C2C2A;">
+        <div class="flex justify-between pt-5">
+            <a class="ml-10" href="{% url 'chat_list' %}">
+                <i class="fa fa-arrow-left fa-base text-white" aria-hidden="true"></i>
+            </a>
+            <a class="mr-10"><p class=" text-white" aria-hidden="true">{{ other_user.first_name }}</p></a>
+        </div>
+        <!-- <h2>Chat with {{ other_user.username }}</h2> -->
+        <div class="">
             <ul class="">
                 {% for message in messages %}
-                <li class="">
-                    <div>
-                        <strong>{{ message.sender.username }}:</strong> {{ message.message }} <em>{{ message.timestamp }}</em>
+                <li class="{% if other_user.username == message.sender.username %} text-left {% else %} text-right {% endif %}">
+                    <div class="text-black bg-white my-4 w-2/3 rounded-lg px-2 {% if other_user.username == message.sender.username %} ml-2 {% else %} ml-28 {% endif %}">
+                        <div>
+                        <!-- <strong>{{ message.sender.username }}:</strong> -->
+                         <p class="text-lg">{{ message.message }}</p> 
+                         <p class="text-xs">{{ message.timestamp }}</p>
+                        </div>
                     </div>
                 </li>
                 {% endfor %}
             </ul>
         </div>
         <div>
-            <form method="post" action="{% url 'send_message' %}">
+            <form method="post" action="{% url 'send_message' %}" class="bg-white rounded-lg mx-5 pt-2">
                 {% csrf_token %}
                 <input type="hidden" name="receiver" value="{{ other_user.username }}">
-                <textarea name="message" placeholder="Type your message here..." required></textarea>
-                <button type="submit">Send</button>
+                <textarea name="message" placeholder="message..." required class="bg-green-900 rounded-lg px-4"></textarea>
+                <button type="submit" class=""><i class="fa fa-paper-plane fa-2x" aria-hidden="true"></i></button>
             </form>
         </div>
-        <a href="{% url 'chat_list' %}">Back to Chat List</a>
+        <br>
+        <!-- <a href="{% url 'chat_list' %}">Back to Chat List</a> -->
     </section>
 </body>
 </html>

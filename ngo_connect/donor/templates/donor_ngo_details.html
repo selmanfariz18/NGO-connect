@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.first_name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+</head>
+<body style="font-family: sans-serif; background-color: #1C2C2A;">
+
+    <header class="lg:px-16 px-4 flex flex-wrap items-center py-4 shadow-md">
+        <div class="flex-1 flex justify-between items-center">
+          <a href="#" class="text-xl text-white">NGO-Connect <p class="text-sm">{{ user.first_name }}</p></a>
+        </div>
+    
+        <label for="menu-toggle" class="pointer-cursor lg:hidden block">
+            <svg
+                class="fill-current text-gray-900"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+            >
+                <title>menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+            </svg>
+        </label>
+        <input class="hidden" type="checkbox" id="menu-toggle"/>
+    
+        <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+            <nav>
+                <ul
+                    class="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0"
+                >
+                <!-- <li>
+                  <a class="md:p-4 py-3 px-0 block">Balance: ₹{{bank.current_balance}}</a>
+                </li> -->
+                <!-- <li class="relative">
+                  <a href="#" class="px-2" id="notificationButton">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell fa-2x"></i> 
+                        <span class="badge">{{ notification_count }}</span>
+                    </div>
+                  </a>
+                 
+                  <div class="absolute right-0 mt-2 w-56 bg-white shadow-xl hidden" id="notificationDropdown">
+                   
+                    {% for i in notifications %}
+                    <div class="flex justify-between items-start p-4 border-b border-gray-200">
+                      <div class="flex-grow">
+                        <form action="">
+                          <h6 class="text-sm font-semibold text-gray-700">{{ i.name }}</h6>
+                          <p class="text-xs text-gray-600">{{ i.desc }}</p>
+                        </form>
+                      </div>
+                      <div>
+                        <form method="post" action="/ngo/dlt_notification">
+                          {% csrf_token %}
+                          <input type="hidden" name="id" value="{{ i.id }}">
+                          <button class="text-gray-400 hover:text-gray-500" type="submit">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    
+                  </div>
+                </li> -->
+                    <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_all_users">All Users</a></li> -->
+                    <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_donor_users">Contributers</a></li> -->
+                    <!-- <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block hover:bg-blue-300" href="/ngo/ngo_profile_page"><i class="fa fa-user" aria-hidden="true"></i></a></li> -->
+                    <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block fa-xl text-white" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    {% if goods %}
+    <h1 class="text-left mx-48 my-5 text-3xl mt-5 text-white">Goods Given</h1>
+    <section id="transactions" class="m-4 px-4 flex justify-center items-center -z-10">
+      <div class="relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg w-4/5">
+          <table class="w-full text-sm text-left rtl:text-right text-black dark:text-black">
+              <thead class="text-xs text-black uppercase bg-white">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-base">
+                        TO
+                    </th>
+                      <th scope="col" class="px-6 py-3 text-base">
+                          Given item
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-base">
+                          Used for
+                      </th>
+                      <!-- <th scope="col" class="px-6 py-3">
+                          Transaction Type
+                      </th> -->
+                      <th scope="col" class="px-6 py-3 text-base">
+                          Amount
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-base">
+                          Done At
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for i in goods %}
+                  <tr class="bg-white border-b dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
+                        {{ i.to_user }}
+                    </th>
+                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
+                          {{ i.thing_name }}
+                      </th>
+                      <td class="px-6 py-4">
+                          {{ i.for_what }}
+                      </td>
+                      <!-- <td class="px-6 py-4">
+                          {{ i.transaction_type }}
+                      </td> -->
+                      <td class="px-6 py-4">
+                          {{ i.thing_quantity }}
+                      </td>    
+                      <td class="px-6 py-4">
+                          {{ i.date }}
+                      </td>               
+                  </tr>  
+                  {% endfor %}            
+              </tbody>
+          </table>
+      </div>
+      {% endif %}      
+    </section>
+
+
+    {% if transactions %}
+    <h1 class="text-left mx-48 my-5 text-3xl mt-10 text-white">Transactions</h1>
+    <section id="transactions" class="m-4 px-4 flex justify-center items-center -z-10">
+        <div class="relative overflow-x-auto overflow-y-auto h-96 shadow-md sm:rounded-lg w-4/5">
+            <table class="w-full text-sm text-left rtl:text-right text-black dark:text-black">
+                <thead class="text-xs text-black uppercase bg-white">
+                  <tr>
+                      <th scope="col" class="px-6 py-3">
+                          Transaction Id
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          TO
+                      </th>
+                      <!-- <th scope="col" class="px-6 py-3">
+                          Transaction Type
+                      </th> -->
+                      <th scope="col" class="px-6 py-3">
+                          Amount
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Done At
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for i in transactions %}
+                  <tr class="bg-white border-b dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
+                          {{ i.transaction_id }}
+                      </th>
+                      <td class="px-6 py-4">
+                          {{ i.to_user }}
+                      </td>
+                      <!-- <td class="px-6 py-4">
+                          {{ i.transaction_type }}
+                      </td> -->
+                      <td class="px-6 py-4">
+                          ₹{{ i.amount }}
+                      </td>    
+                      <td class="px-6 py-4">
+                          {{ i.done_at }}
+                      </td>               
+                  </tr>  
+                  {% endfor %}            
+              </tbody>
+          </table>
+      </div>
+      {% endif %}
+    </section>
+    
+</body>
+</html>

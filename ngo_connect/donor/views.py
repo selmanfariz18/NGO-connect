@@ -12,7 +12,7 @@ from ngo.models import NgoBankTransactions, NgoBank
 import base64
 import uuid
 
-
+from reciever.models import RecieverRequestGoods
 
 
 # Create your views here.
@@ -145,3 +145,18 @@ def donor_profile_page(request):
 
 
         
+def donor_ngo_details(request):
+    if request.method == 'POST':
+        id = request.POST['id']
+        user = get_object_or_404(ngousers, id=id).user
+
+        goods = RecieverRequestGoods.objects.filter(from_user=user).order_by('-date')
+        transactions = NgoBankTransactions.objects.filter(from_user=user).order_by('-done_at')
+
+        context={
+            'user': user,
+            'goods': goods,
+            'transactions':transactions,
+        }
+        
+    return render(request, 'donor_ngo_details.html', context)

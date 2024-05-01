@@ -192,6 +192,12 @@
                         <!-- <p>{{ item.ngo.user }}</p> -->
                         <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">Donate</button>
                     </form>
+                    <form method="post" action="/donor/donor_ngo_details" class="px-5">
+                      {% csrf_token %}
+                      <input type="hidden" name="id" value="{{ item.ngo.id }}">
+                      <!-- <p>{{ item.ngo.user }}</p> -->
+                      <button type="submit" class="my-3 px-3 w-32 h-10 bg-black text-white rounded-lg">More details</button>
+                    </form>
                 </div>
             </div>
             {% endfor %}

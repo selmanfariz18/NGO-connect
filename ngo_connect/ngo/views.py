@@ -10,7 +10,7 @@ from base.models import ngousers
 from django.contrib.auth.models import User
 from base.models import ngousers, Notifications
 from reciever.models import ReceiverMoreDetails, RecieverBank, RecieverRequestGoods, RecieverRequests, RecieverResidents, Events
-from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank
+from ngo.models import NgoBankTransactions, Reciever_under_ngo, NgoBank, NgoVolunteers
 from django.db.models import Count
 from django.utils.timezone import now
 
@@ -462,3 +462,46 @@ def ngo_reciever_details(request):
         }
         
     return render(request, 'ngo_reciever_details.html', context)
+
+
+def volunteers(request):
+
+    volunteers = NgoVolunteers.objects.filter(ngo=request.user).order_by('name')
+
+    context = {
+        'volunteers' : volunteers,
+    }
+
+    return render(request, 'volunteers.html', context)
+
+
+def add_volunteers(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        job = request.POST.get('job')        
+
+        try:
+            NgoVolunteers.objects.create(
+                ngo = request.user,
+                name = name,
+                age = age,
+                gender = gender,
+                job = job,
+            )
+            # try:
+            #     receiver = ReceiverMoreDetails.objects.get(user=request.user)
+            # except ReceiverMoreDetails.DoesNotExist:
+            #     receiver = ReceiverMoreDetails(user=request.user) 
+            # if receiver.residents_count == None:
+            #     receiver.residents_count = 0
+            # receiver.residents_count +=1
+            # receiver.save()           
+            messages.success(request, "Volunteer added!")
+            return redirect("volunteers")
+        except:
+            messages.error(request, "Error in adding Volunteer!")
+            return redirect("volunteers")
+
+    return render(request, 'add_volunteers.html')

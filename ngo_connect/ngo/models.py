@@ -20,3 +20,10 @@ class Reciever_under_ngo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_ngos')
     reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_ngos', unique=True)
     status = models.CharField(max_length=10, choices=(('accepted', 'accepted'), ('rejected', 'rejected'), ('pending', 'pending'),), null=True)
+
+class NgoVolunteers(models.Model):
+    ngo = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=20, blank=True)
+    age = models.IntegerField(null=True)
+    gender = models.CharField(max_length=8, choices=(('male', 'male'), ('female', 'female'),), null=True)
+    job = models.CharField(max_length=20, blank=True)

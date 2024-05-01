@@ -17,4 +17,6 @@ urlpatterns = [
     path('accept_donation_request', views.accept_donation_request, name="accept_donation_request"),
     path('reject_donation_request', views.reject_donation_request, name="reject_donation_request"),
     path('ngo_reciever_details', views.ngo_reciever_details, name="ngo_reciever_details"),
+    path('volunteers', views.volunteers, name="volunteers"),
+    path('add_volunteers', views.add_volunteers, name="add_volunteers"),
 ]

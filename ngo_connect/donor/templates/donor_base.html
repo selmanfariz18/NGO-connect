@@ -134,12 +134,21 @@
             </li> -->
             <li><a class="md:p-4 py-3 px-0 block" href="/donor/donor_profile_page"><i class="fa fa-user text-white fa-xl" aria-hidden="true"></i></a></li>
             <li>
-              <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="/logout"><i class="fa fa-sign-out fa-xl text-white" aria-hidden="true"></i></a>
-            </li>
-          </ul>
+              <li><a class="lg:p-4 py-3 rounded-md text-white px-0 mx-1 block" href="#" onclick="confirmLogout(event, '/logout')"><i class="fa fa-sign-out fa-xl" aria-hidden="true"></i></a></li>
+            </ul>
         </nav>
-      </div>
-    </header>
+    </div>
+</header>
+<script>
+  function confirmLogout(event, url) {
+    if (confirm("Are you sure you want to LogOut?")) {
+        window.location.href = url;
+    } else {
+        event.preventDefault();
+        document.getElementById("demo").innerHTML = "You canceled!";
+    }
+  }
+</script>
 
           <!--Alert area-->
           <div class="form-group row mt-6">

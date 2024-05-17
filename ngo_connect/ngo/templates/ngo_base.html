@@ -148,11 +148,21 @@
             </li>
                 <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block text-white" href="/chat/chat"><i class="fa fa-comments fa-xl" aria-hidden="true"></i></a></li>
                 <li><a class="lg:p-4 py-3 rounded-md px-0 mx-1 block text-white" href="/ngo/ngo_profile_page"><i class="fa fa-user fa-xl" aria-hidden="true"></i></a></li>
-                <li><a class="lg:p-4 py-3 rounded-md text-white px-0 mx-1 block" href="/logout"><i class="fa fa-sign-out fa-xl" aria-hidden="true"></i></a></li>
+                <li><a class="lg:p-4 py-3 rounded-md text-white px-0 mx-1 block" href="#" onclick="confirmLogout(event, '/logout')"><i class="fa fa-sign-out fa-xl" aria-hidden="true"></i></a></li>
             </ul>
         </nav>
     </div>
 </header>
+<script>
+  function confirmLogout(event, url) {
+    if (confirm("Are you sure you want to LogOut?")) {
+        window.location.href = url;
+    } else {
+        event.preventDefault();
+        document.getElementById("demo").innerHTML = "You canceled!";
+    }
+  }
+</script>
 
       <!--Alert area-->
       <div class="form-group row mt-6">

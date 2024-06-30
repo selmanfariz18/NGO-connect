@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import include, path
 
+from base.views import custom_404_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('base.urls')),
@@ -10,3 +12,5 @@ urlpatterns = [
     path('reciever/', include('reciever.urls')),
     path('chat/', include('chat.urls')),
 ]  
+
+handler404 = custom_404_view
